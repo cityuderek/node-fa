@@ -5,9 +5,13 @@
     "url": "https://derek-lam.com"
   },
   "name": "node-fa",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Node JS library",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cityuderek/node-fa"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "jest",
@@ -17,7 +21,7 @@
     "testAllN": "nodemon --watch util --watch helper --watch test  --watch testAll.js test/testAll.js",
     "check-env": "node -e 'console.log(process.env)' | grep npm"
   },
-  "license": "ISC",
+  "license": "MIT License",
   "devDependencies": {
     "jest": "^26.6.3"
   },
