@@ -5,7 +5,7 @@
     "url": "https://derek-lam.com"
   },
   "name": "node-fa",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Node JS library",
   "main": "index.js",
   "repository": {
@@ -27,10 +27,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "create-index": "^2.6.0",
-    "dotenv": "^8.2.0",
-    "js-sha256": "github:emn178/js-sha256",
-    "moment": "^2.29.1",
-    "node-forge": "github:digitalbazaar/forge"
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1"
   }
 }
