@@ -6,6 +6,31 @@ const test = () => {
 }
 module.exports.test = test
 
+//// array /////////////////////////////////////////////////////////////////////
+const showArr = (arr, title = undefined) => {
+  console.log('Array(' + title + ')=', arr.length);
+  arr.map(item=>{
+      console.log('item=', item);
+  })
+};
+module.exports.showArr = showArr
+
+const pushIfNotNull = (arr, item)=>{
+  if(item !== null) arr.push(item);
+};
+module.exports.pushIfNotNull = pushIfNotNull;
+
+const indexOfVal = (arr, key, value) => {
+  let i = 0;
+  for(const item of arr){
+    // console.log(`i=${i}, value=${value}, item=${item[key]}`);
+    if (item[key] === value) return i;
+    i++;
+  }
+  return -1;
+}
+module.exports.indexOfVal = indexOfVal;
+
 const kVArrToObj = (keys, vals)=>{
   let obj = {};
   keys.map((key, i)=>{

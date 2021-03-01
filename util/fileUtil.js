@@ -1,5 +1,5 @@
 const fs = require('fs')
-const { nfa, strUtil, arrUtil } = require('node-fa/util')
+const { nfa } = require('./nfa')
 
 const readFileSync = (path, encoding = 'utf8')=>{
   return fs.readFileSync(path, 'utf8');
@@ -13,7 +13,6 @@ const readAllLines = (path, options)=>{
     return lines;
 }
 exports.readAllLines = readAllLines
-
 
 const readCsv = (path, options)=>{
     const parse = require('csv-parse/lib/sync')

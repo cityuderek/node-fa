@@ -1,10 +1,3 @@
-const testUtil = require('./testUtil');
-
-const test = () => {
-  console.log('mathUtil.test');
-  testUtil.testFunc(Math.round, 123, null, 123.456);
-}
-module.exports.test = test
 
 let isShowAll = true;
 const setShowAll = b=>isShowAll = b
@@ -24,6 +17,7 @@ const testFunc = (func, expVal, ...params) => {
 module.exports.testFunc = testFunc
 
 
+//// number ///////////////////////////////////////////////////////////////////
 const round = (num, n = 0)=>{
   const base = Math.pow(10, n);
   const rounded = Math.round(num * base) / base;
@@ -31,3 +25,38 @@ const round = (num, n = 0)=>{
   return rounded;
 }
 module.exports.round = round
+
+
+//// integer ///////////////////////////////////////////////////////////////////
+const parseInt = (param1)=>{
+  if(typeof param1 === 'string'){
+    param1 = param1.trim().toLowerCase();
+    if(param1.endsWith('k')){
+      return param1.substr(0, param1.length -1) * 1000;
+
+    }else if(param1.endsWith('m')){
+      return param1.substr(0, param1.length -1) * 1000000;
+    }
+  }
+
+  let n = Number.parseInt(param1);
+  if(isNaN(n)) n = 0;
+  return n;
+};
+module.exports.parseInt = parseInt;
+
+const parseIntRndK = (str)=>{
+  let n = parseInt(str) / 1000;
+  // console.log(`n=${n}`);
+  return Math.round(n);
+};
+module.exports.parseIntRndK = parseIntRndK;
+
+const parseIntRnd = (str)=>{
+  let n = parseInt(str);
+  // console.log(`n=${n}`);
+  return Math.round(n);
+};
+module.exports.parseIntRnd = parseIntRnd;
+
+//// float ///////////////////////////////////////////////////////////////////

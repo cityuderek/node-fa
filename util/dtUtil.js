@@ -1,6 +1,16 @@
 const moment = require('moment')
 
 //// Moment
+const isMoment = (obj)=>{
+  return moment.isMoment(obj);
+}
+module.exports.isMoment = isMoment
+
+const durationNow = (mm)=>{
+  return moment.duration(moment(new Date()).diff(mm));
+}
+module.exports.durationNow = durationNow;
+
 const getMm = (dt = null, addYr = 0, addMo = 0, addDay = 0)=> {
     let mm;
     if(dt){
@@ -21,13 +31,13 @@ const getMm = (dt = null, addYr = 0, addMo = 0, addDay = 0)=> {
 
     return mm;
 }
-module.exports.getMm = getMm
+module.exports.getMm = getMm;
 
 const parseMm = (sDt, format = "YYYY-MM-DD")=>{
   let mm = moment(sDt, format);
   return mm;
 }
-module.exports.parseMm = parseMm
+module.exports.parseMm = parseMm;
 
 const toDtStr = (dt, format = "YYYY-MM-DD")=>{
   let mm = null;
@@ -39,19 +49,19 @@ const toDtStr = (dt, format = "YYYY-MM-DD")=>{
   }
   return mm.format("YYYY-MM-DD");
 }
-module.exports.toDtStr = toDtStr
+module.exports.toDtStr = toDtStr;
 
 //// Date
 const geJts = ()=> Date.now()
-module.exports.geJts = geJts
+module.exports.geJts = geJts;
 
 const geUts = ()=> parseInt(Date.now() / 1000)
-module.exports.geUts = geUts
+module.exports.geUts = geUts;
 
 const isDt = (obj)=>{
   return obj instanceof Date
 }
-module.exports.isDt = isDt
+module.exports.isDt = isDt;
 
 const toLocaleString = (dt, defVal = "")=>{
   if(!dt) return defVal;
@@ -63,4 +73,4 @@ const toLocaleString = (dt, defVal = "")=>{
 
   return defVal;
 }
-module.exports.toLocaleString = toLocaleString
+module.exports.toLocaleString = toLocaleString;

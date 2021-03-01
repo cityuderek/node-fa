@@ -5,7 +5,26 @@
 //   return str.replace(/ /g, '_').replace(/[^a-zA-Z0-9_]/g, '').toLowerCase();
 // }
 
-const camelize = (data)=>{
+console.log('load strUtil');
+
+//// string ////////////////////////////////////////////////////////////////////
+const showStr = (str, title = 'str')=>{
+  if(str === null){
+    console.log(`${title} is null`);
+
+  }else{
+    let len = str.length;
+    console.log(`${title}(${len})="${str}"`);
+  }
+};
+exports.showStr = showStr;
+
+const rmLineNDblSpace = (str)=>{
+  return str.replace(/[\t\r\n]/g, ' ').replace(/ +/g, ' ').trim();
+};
+exports.rmLineNDblSpace = rmLineNDblSpace;
+
+const strCamelize = (data)=>{
   if(Array.isArray(data)){
     let arr = [];
     data.map(str=>{
@@ -19,17 +38,19 @@ const camelize = (data)=>{
     return index === 0 ? word.toLowerCase() : word.toUpperCase();
   }).replace(/\s+/g, '');
 }
+exports.strCamelize = strCamelize;
 
-const underscore = (str)=>{
+const strUnderscore = (str)=>{
   return str.trim().replace(/ /g, '_').replace(/[^a-zA-Z0-9_]/g, '').toLowerCase();
 }
+exports.strUnderscore = strUnderscore;
 
 const rmSpecialChars = (str, replacement = '')=>{
   return str.replace(/[^a-zA-Z0-9_]/g, replacement)
 }
+exports.rmSpecialChars = rmSpecialChars;
 
 const rmSpace = (str, replacement = '')=>{
   return str.replace(/ /g, replacement)
 }
-
-module.exports = {camelize, underscore, rmSpecialChars, rmSpace}
+exports.rmSpace = rmSpace;

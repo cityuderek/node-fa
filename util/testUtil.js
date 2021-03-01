@@ -1,4 +1,8 @@
-const nfa = require('../util/nfa')
+const nfa = require('./nfa');
+
+console.log('load testUtil');
+console.log(`str ` + nfa.strCamelize('fish wav'))
+console.log(`str ` + nfa.isEqual('fish', 'fish'))
 
 const test = () => {
   console.log('testUtil.test');

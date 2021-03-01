@@ -8,12 +8,11 @@
 // });
 // const dtUtil = require('./helpers/dtUtil');
 // const strUtil = require('./helpers/strUtil');
-const { nfa, dtUtil, fileUtil, strUtil, mathUtil, testUtil } = require('../util')
-const cex = require('../cex');
+const { nfa, fileUtil, testUtil } = require('../util')
 // console.log('dtUtil1', dtUtil)
 
 // cex.test()
 // nfa.test();
 // mathUtil.test();
-fileUtil.test()
+// fileUtil.test()
 

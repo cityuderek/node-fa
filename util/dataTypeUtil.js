@@ -1,11 +1,21 @@
-const moment = require('moment')
 
-const isMoment = (obj)=>{
-  return moment.isMoment(obj);
-}
-module.exports.isMoment = isMoment
 
 const isDt = (obj)=>{
   return obj instanceof Date
 }
 module.exports.isDt = isDt
+
+
+//// dataType ////////////////////////////////////////////////////////////////////
+const getType = (obj) =>{
+  let t = typeof obj;
+  if(t === 'object'){
+    if(obj instanceof Date) return 'Date';
+
+  }else if(t === 'number'){
+    if(Number.isInteger(obj)) return 'integer';
+  }
+  
+  return t;
+}
+module.exports.getType = getType
