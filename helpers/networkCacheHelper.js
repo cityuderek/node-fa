@@ -1,9 +1,10 @@
+const { URL } = require('url');
+const md5 = require('md5');
+const { nfa, fileUtil, networkUtil } = require('../util')
 
 let folder = '/'
 
 const test = ()=>{
-  const { URL } = require('url');
-  const md5 = require('md5');
   const myURL = new URL('https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash');
 
   let origin = myURL.origin;
@@ -15,37 +16,64 @@ const test = ()=>{
 };
 exports.test = test;
 
+//// network function /////////////////////////////////////////////////////////
+const getCtt = async (url)=>{
+  let rs = readCtt(url);
+  if(rs === null){
+    rs = await networkUtil.getCtt(url);
+    if(rs !== null && rs !== ""){
+      writeCtt(url, rs);
+    }
+
+  }else{
+    // console.log(`getCtt url=${url}, rs="${rs}"`);
+    let rsTmp = JSON.parse(rs);
+    if(rsTmp !== null){
+      rs = rsTmp;
+    }
+  }
+  return rs;
+}
+module.exports.getCtt = getCtt;
+
+const getJson = async (url)=>{
+  let rs = readCtt(url);
+  if(rs === null){
+    rs = await networkUtil.getJson(url);
+    if(rs !== null && rs !== ""){
+      writeCtt(url, rs);
+    }
+
+  }else{
+    // console.log(`getJson url=${url}, rs="${rs}"`);
+    rs = nfa.parseJson(rs);
+  }
+  return rs;
+}
+module.exports.getJson = getJson;
+
+/////////////////////////////////////////////////////////
 const setFolder = (newFolder)=>{
   folder = newFolder;
 };
 exports.setFolder = setFolder;
 
-const writeFileSync = async(path, ctt)=>{
-  const fs = require('fs');
-  await fs.writeFileSync(path, ctt);
+const readCtt = (url)=>{
+  let filepath = getFilePath(url);
+  return fileUtil.readFileSync(filepath, 'utf8', null);
 };
-exports.writeFileSync = writeFileSync;
 
 const writeCtt = async (url, ctt)=>{
   let filepath = getFilePath(url);
   // console.log('filepath=', filepath);
-  // folder = newFolder;
-  await writeFileSync(filepath, ctt);
+  await fileUtil.writeFileSync(filepath, ctt);
 };
-exports.writeCtt = writeCtt;
 
 const showPath = (url)=>{
   let filepath = getFilePath(url);
   console.log(`url=${url}, filepath=${filepath}`);
 };
 exports.showPath = showPath;
-
-const mkdirSync = (dir)=>{
-  const fs = require('fs');
-  if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir);
-  }
-}
 
 const getFilePath = (sUrl)=>{
   const md5 = require('md5');
@@ -56,13 +84,7 @@ const getFilePath = (sUrl)=>{
   // console.log('origin', encodeURIComponent(origin));
   // console.log('path', md5(path));
   let folder2 = folder + '/' + encodeURIComponent(url.origin);
-  mkdirSync(folder2);
+  fileUtil.mkdirSync(folder2);
   return folder2 + '/' + md5(path) + '.txt';
 };
 exports.getFilePath = getFilePath;
-
-const readCtt = (url)=>{
-  // folder = newFolder;
-  return null;
-};
-exports.setFolder = setFolder;

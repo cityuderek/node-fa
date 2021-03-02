@@ -1,24 +1,28 @@
 const fs = require('fs')
 const { nfa } = require('./nfa')
 
-const readFileSync = (path, encoding = 'utf8')=>{
-  return fs.readFileSync(path, 'utf8');
+//// read file ////////////////////////////////////////////////////////////////
+const readFileSync = (filepath, encoding = 'utf8', defVal = "")=>{
+  if(existsSync(filepath)){
+    return fs.readFileSync(filepath, 'utf8');
+  }
+  return defVal;
 }
 exports.readFileSync = readFileSync
 
-const readAllLines = (path, options)=>{
-    let ctt = fs.readFileSync(path, 'utf8');
+const readAllLines = (filepath, options)=>{
+    let ctt = fs.readFileSync(filepath, 'utf8');
     let lines = arrayOfLines = ctt.match(/[^\r\n]+/g);
 
     return lines;
 }
 exports.readAllLines = readAllLines
 
-const readCsv = (path, options)=>{
+const readCsv = (filepath, options)=>{
     const parse = require('csv-parse/lib/sync')
     let cnt = nfa.gov(options, 0, 'cnt');
     let skip = nfa.gov(options, 0, 'skip');
-    let ctt = fs.readFileSync(path, 'utf8');
+    let ctt = fs.readFileSync(filepath, 'utf8');
     let records = parse(ctt, {
         columns: true,
         skip_empty_lines: true
@@ -36,13 +40,13 @@ const readCsv = (path, options)=>{
 }
 exports.readCsv = readCsv
 
-const readTsv = (path, options = {})=>{
+const readTsv = (filepath, options = {})=>{
   let {isObj = true, maxCnt = 0, skip = 0} = options;
-  let lines = readAllLines(path);
+  let lines = readAllLines(filepath);
   // let isObj = nfa.ovEquals(options, true, 'isObj');
   // let cnt = nfa.gov(options, 0, 'cnt');
   // let skip = nfa.gov(options, 0, 'skip');
-  // console.log(`path=${path}, lines=${lines.length}, isObj=${isObj}, maxCnt=${maxCnt}, skip=${skip}, options=`, options);
+  // console.log(`filepath=${filepath}, lines=${lines.length}, isObj=${isObj}, maxCnt=${maxCnt}, skip=${skip}, options=`, options);
 
   // console.log('lines=', lines);
   let arr = [];
@@ -74,3 +78,28 @@ const readTsv = (path, options = {})=>{
   return arr;
 }
 exports.readTsv = readTsv
+
+
+//// write file ////////////////////////////////////////////////////////////////
+const writeFileSync = (path, ctt)=>{
+  if(typeof ctt === 'object'){
+    ctt = JSON.stringify(ctt);
+  }
+  fs.writeFileSync(path, ctt);
+};
+exports.writeFileSync = writeFileSync;
+
+//// file ////////////////////////////////////////////////////////////////
+
+const existsSync = (path)=>{
+  return fs.existsSync(path);
+}
+exports.existsSync = existsSync;
+
+//// dir ////////////////////////////////////////////////////////////////
+const mkdirSync = (dir)=>{
+  if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+  }
+}
+exports.mkdirSync = mkdirSync;

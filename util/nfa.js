@@ -6,6 +6,7 @@ module.exports = {
   ...require('./arrUtil'),
   ...require('./dataTypeUtil'),
   ...require('./dtUtil'),
+  ...require('./jsonUtil'),
   ...require('./mathUtil'),
   ...require('./objUtil'),
   ...require('./strUtil')

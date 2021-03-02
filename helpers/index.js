@@ -1,4 +1,9 @@
-// @create-index
+const counter = require('./counter.js');
+const jHtmlParser = require('./jHtmlParser.js');
+const networkCacheHelper = require('./networkCacheHelper.js');
 
-export { default as counter } from './counter.js';
-
+module.exports = {
+  counter,
+  jHtmlParser,
+  networkCacheHelper,
+}

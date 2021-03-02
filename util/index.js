@@ -6,6 +6,7 @@
 const arrUtil = require('./arrUtil')
 const dtUtil = require('./dtUtil')
 const fileUtil = require('./fileUtil')
+const jsonUtil = require('./jsonUtil')
 const objUtil = require('./objUtil')
 const mathUtil = require('./mathUtil')
 const networkUtil = require('./networkUtil')
@@ -18,10 +19,11 @@ module.exports = {
     arrUtil, 
     dtUtil, 
     fileUtil,
+    jsonUtil,
+    objUtil, 
     mathUtil, 
     networkUtil,
     nfa,
-    objUtil, 
     strUtil, 
     tblUtil,
     testUtil,

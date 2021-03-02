@@ -1,4 +1,5 @@
 const { nfa, testUtil, networkUtil } = require('../util')
+const { networkCacheHelper } = require('../helpers')
 
 const test = async() => {
   console.log('networkTest.test');
@@ -8,7 +9,8 @@ const test = async() => {
   // testUtil.testFunc(nfa.isEqual, false, null, moment('2021-09-01'), moment('2021-01-06'));
 
   let url1 = 'https://api.myip.com';
-  let json = await networkUtil.getCtt(url1);
+  let json = null;
+  json = await networkUtil.getCtt(url1);
   // console.log('json' + json, json);
   testUtil.handleRs('networkUtil.getCtt', true, nfa.isNonEmptyObj(json), url1);
   
@@ -20,6 +22,19 @@ const test = async() => {
   // console.log('json', json);
   testUtil.handleRs('networkUtil.getCtt', false, nfa.isNonEmptyStr(json.ip), url1);
 
+  //// networkCacheHelper
+  networkCacheHelper.setFolder('/Users/derek/Dropbox/projProperty/NetworkCacheHelper2');
+  json = await networkCacheHelper.getCtt(url1);
+  // console.log('json', json);
+  testUtil.handleRs('networkCacheHelper.getCtt', true, nfa.isNonEmptyObj(json), url1);
+  
+  json = await networkCacheHelper.getJson(url1);
+  // console.log('json', json);
+  testUtil.handleRs('networkCacheHelper.getCtt', true, nfa.isNonEmptyStr(json.ip), url1);
+  
+  json = await networkCacheHelper.getJson(url1 + 'sss');
+  // console.log('json', json);
+  testUtil.handleRs('networkCacheHelper.getCtt', false, nfa.isNonEmptyStr(json.ip), url1);
 
   testUtil.showAllRs();
 }

@@ -1,6 +1,57 @@
 const moment = require('moment')
 
-//// Moment
+//// String ////////////////////////////////////////////////////////////////////
+const nowDtmStr = ()=>{
+  return moment().format("YYYY-MM-DD hh:mm:ss");
+}
+module.exports.nowDtmStr = nowDtmStr;
+
+const nowDtmUnderscoreStr = ()=>{
+  return moment().format("YYYY_MM_DD_hh_mm_ss");
+}
+module.exports.nowDtmUnderscoreStr = nowDtmUnderscoreStr;
+
+const nowDtmNumberStr = ()=>{
+  return moment().format("YYYYMMDDhhmmss");
+}
+module.exports.nowDtmNumberStr = nowDtmNumberStr;
+
+const nowDtNTmNumberStr = ()=>{
+  return moment().format("YYYYMMDD_hhmmss");
+}
+module.exports.nowDtNTmNumberStr = nowDtNTmNumberStr;
+
+const nowDtStr = ()=>{
+  return moment().format("YYYY-MM-DD");
+}
+module.exports.nowDtStr = nowDtStr;
+
+const nowDtUnderscoreStr = ()=>{
+  return moment().format("YYYY_MM_DD");
+}
+module.exports.nowDtUnderscoreStr = nowDtUnderscoreStr;
+
+const nowDtNumberStr = ()=>{
+  return moment().format("YYYYMMDD");
+}
+module.exports.nowDtNumberStr = nowDtNumberStr;
+
+const nowTmStr = ()=>{
+  return moment().format("hh:mm:ss");
+}
+module.exports.nowTmStr = nowTmStr;
+
+const nowTmUnderscoreStr = ()=>{
+  return moment().format("hh_mm_ss");
+}
+module.exports.nowTmUnderscoreStr = nowTmUnderscoreStr;
+
+const nowTmNumberStr = ()=>{
+  return moment().format("hhmmss");
+}
+module.exports.nowTmNumberStr = nowTmNumberStr;
+
+//// Moment ////////////////////////////////////////////////////////////////////
 const isMoment = moment.isMoment;
 module.exports.isMoment = isMoment;
 
@@ -49,7 +100,7 @@ const toDtStr = (dt, format = "YYYY-MM-DD")=>{
 }
 module.exports.toDtStr = toDtStr;
 
-//// Date
+//// Date //////////////////////////////////////////////////////////////////////
 const geJts = ()=> Date.now()
 module.exports.geJts = geJts;
 
