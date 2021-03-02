@@ -9,6 +9,9 @@ const test = require('../test');
 // console.log(`str ` + nfa.strCamelize('fish wav'))
 // console.log(`str ` + nfa.isEqual('fish', 'fish'))
 
+const isShowAll = 0;
+testUtil.setShowAll(isShowAll);
+
 Object.keys(test).forEach(key=>{
     let testMod = test[key];
     if(typeof testMod.test == 'function'){
@@ -16,7 +19,6 @@ Object.keys(test).forEach(key=>{
         testMod.test()
     }
 })
-
 
 // nfa.test();
 // mathUtil.test();

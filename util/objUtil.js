@@ -1,7 +1,8 @@
 const _ = require('lodash');
+const moment = require('moment');
 // const nfa = require('./nfa')
 
-console.log('load objUtil');
+// console.log('load objUtil');
 
 //// object ////////////////////////////////////////////////////////////////////
 //// get object value, not allow false
@@ -81,8 +82,18 @@ const hasKey = (obj, ...keys) => {
 module.exports.hasKey = hasKey
 
 module.exports.isEqual = _.isEqual
+const isEqual = (obj1, obj2)=>{
+  let rs = _.isEqual(obj1, obj2);
+  if(rs) return true;
+  if(moment.isMoment(obj1)){
+    return obj1.isSame(obj2);
+  }
 
-const isNotEqual = (obj1, obj2)=>!_.isEqual(obj1, obj2)
+  return false;
+}
+module.exports.isEqual = isEqual
+
+const isNotEqual = (obj1, obj2)=>isEqual(obj1, obj2)
 module.exports.isNotEqual = isNotEqual
 
 const clone = obj=>JSON.parse(JSON.stringify(obj))

@@ -1,10 +1,8 @@
 const moment = require('moment')
 
 //// Moment
-const isMoment = (obj)=>{
-  return moment.isMoment(obj);
-}
-module.exports.isMoment = isMoment
+const isMoment = moment.isMoment;
+module.exports.isMoment = isMoment;
 
 const durationNow = (mm)=>{
   return moment.duration(moment(new Date()).diff(mm));

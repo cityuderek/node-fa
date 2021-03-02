@@ -19,3 +19,11 @@ const getType = (obj) =>{
   return t;
 }
 module.exports.getType = getType
+
+const length = (obj) =>{
+  if(typeof obj === 'string') return obj.length;
+  if(Array.isArray(obj)) return obj.length;
+
+  return 0;
+}
+module.exports.length = length

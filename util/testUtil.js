@@ -1,8 +1,8 @@
 const nfa = require('./nfa');
 
-console.log('load testUtil');
-console.log(`str ` + nfa.strCamelize('fish wav'))
-console.log(`str ` + nfa.isEqual('fish', 'fish'))
+// console.log('load testUtil');
+// console.log(`str ` + nfa.strCamelize('fish wav'))
+// console.log(`str ` + nfa.isEqual('fish', 'fish'))
 
 const test = () => {
   console.log('testUtil.test');
@@ -18,9 +18,12 @@ const setShowAll = b=>isShowAll = b
 module.exports.setShowAll = setShowAll
 
 const testFunc = (func, expVal, paramName = null, ...params) => {
-  let rs = func(...params)
-  let isExp = nfa.isEqual(rs, expVal)
-  let msg = (isExp ? 'OK  ': 'FAIL') + ", func=" + func.name + ", expVal=" + expVal + ", rs=" + rs + ", params="
+  let rs = func(...params);
+  return handleRs(func.name, expVal, rs, paramName, ...params);
+}
+module.exports.testFunc = testFunc
+
+const handleRs = (funcName, expVal, actVal, paramName = null, ...params) => {
   const showRs = (msg, paramName, params)=>{
     if(paramName === null){
       console.log(msg, params);
@@ -29,14 +32,25 @@ const testFunc = (func, expVal, paramName = null, ...params) => {
       console.log(msg + paramName);
     }
   }
+
+  let isExp = nfa.isEqual(actVal, expVal);
+  let expValLen = nfa.length(expVal);
+  let actValLen = nfa.length(actVal);
+  // if(!isExp){
+  //   const moment = require('moment');
+  //   console.log('~', moment(actVal).isSame(expVal));
+  // }
+  let msg = (isExp ? 'OK  ': 'FAIL') + ", func=" + funcName + 
+  ", expVal(" + nfa.getType(expVal) + (expValLen ? ', ' + expValLen : '') + ")=" + expVal + 
+  ", actVal(" + nfa.getType(actVal) + (actValLen ? ', ' + actValLen : '') + ")=" + actVal + 
+  ", params=";
   if(isShowAll || !isExp){
     showRs(msg, paramName, params);
   }
   addRs(isExp)
-
   return isExp;
 }
-module.exports.testFunc = testFunc
+module.exports.handleRs = handleRs
 
 //// counter
 const addRs = (obj)=>{

@@ -16,7 +16,6 @@ const testFunc = (func, expVal, ...params) => {
 }
 module.exports.testFunc = testFunc
 
-
 //// number ///////////////////////////////////////////////////////////////////
 const round = (num, n = 0)=>{
   const base = Math.pow(10, n);
@@ -25,7 +24,6 @@ const round = (num, n = 0)=>{
   return rounded;
 }
 module.exports.round = round
-
 
 //// integer ///////////////////////////////////////////////////////////////////
 const parseInt = (param1)=>{

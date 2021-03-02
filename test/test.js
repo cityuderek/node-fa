@@ -9,9 +9,10 @@
 // const dtUtil = require('./helpers/dtUtil');
 // const strUtil = require('./helpers/strUtil');
 const { nfa, fileUtil, testUtil } = require('../util')
+const { strTest } = require('../test')
 // console.log('dtUtil1', dtUtil)
 
-// cex.test()
+strTest.test()
 // nfa.test();
 // mathUtil.test();
 // fileUtil.test()
