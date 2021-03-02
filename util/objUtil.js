@@ -7,7 +7,7 @@ const moment = require('moment');
 //// object ////////////////////////////////////////////////////////////////////
 //// get object value, not allow false
 const gov = (obj, defVal, ...keys) => {
-  if (!obj === null || keys[0] === null) return defVal;
+  if (obj === null || keys[0] === null || typeof obj === 'undefined' || typeof keys[0] === 'undefined') return defVal;
 
   if(keys.length === 1 && typeof keys[0] === 'string' && keys[0].indexOf('.') > 0){
     return gov(obj, defVal, ...keys[0].split('.'))
@@ -45,7 +45,7 @@ module.exports.gov = gov
 
 //// get object value, object value base
 const govo = (obj, defVal, ...keys) => {
-  if (!obj === null || keys[0] === null) return defVal;
+  if (obj === null || keys[0] === null || typeof obj === 'undefined' || typeof keys[0] === 'undefined') return defVal;
 
   if(keys.length === 1 && typeof keys[0] === 'string' && keys[0].indexOf('.') > 0){
     return gov(obj, defVal, ...keys[0].split('.'))
@@ -79,9 +79,9 @@ const hasKey = (obj, ...keys) => {
 
   return true;
 };
-module.exports.hasKey = hasKey
+module.exports.hasKey = hasKey;
 
-module.exports.isEqual = _.isEqual
+module.exports.isEqual = _.isEqual;
 const isEqual = (obj1, obj2)=>{
   let rs = _.isEqual(obj1, obj2);
   if(rs) return true;
@@ -91,22 +91,25 @@ const isEqual = (obj1, obj2)=>{
 
   return false;
 }
-module.exports.isEqual = isEqual
+module.exports.isEqual = isEqual;
 
-const isNotEqual = (obj1, obj2)=>isEqual(obj1, obj2)
-module.exports.isNotEqual = isNotEqual
+const isNotEqual = (obj1, obj2)=>isEqual(obj1, obj2);
+module.exports.isNotEqual = isNotEqual;
 
-const clone = obj=>JSON.parse(JSON.stringify(obj))
-module.exports.clone = clone
+const clone = obj=>JSON.parse(JSON.stringify(obj));
+module.exports.clone = clone;
 
-const isObj = obj=>typeof obj === 'object' && obj !== null
-module.exports.isObj = isObj
+const isObj = obj=>typeof obj === 'object' && obj !== null;
+module.exports.isObj = isObj;
 
-const isNonEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length > 0
-module.exports.isNonEmptyObj = isNonEmptyObj
+const isNullGroup = obj=>obj === null || typeof obj === 'undefined' || (typeof obj === 'number' && isNaN(obj));
+module.exports.isNullGroup = isNullGroup;
 
-const isEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length === 0
-module.exports.isEmptyObj = isEmptyObj
+const isEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length === 0;
+module.exports.isEmptyObj = isEmptyObj;
+
+const isNonEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length > 0;
+module.exports.isNonEmptyObj = isNonEmptyObj;
 
 const ovEquals = (obj, expectedVal, ...keys) => {
   if(expectedVal === null){
@@ -115,9 +118,9 @@ const ovEquals = (obj, expectedVal, ...keys) => {
 
   return gov(obj, null, ...keys) === expectedVal;
 };
-module.exports.ovEquals = ovEquals
+module.exports.ovEquals = ovEquals;
 
 const objLen = (obj) =>{
   return Object.keys(obj).length;
 }
-module.exports.objLen = objLen
+module.exports.objLen = objLen;
