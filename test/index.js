@@ -10,8 +10,7 @@ const nfaTest = require('./nfaTest.js');
 const objTest = require('./objTest.js');
 const strTest = require('./strTest.js');
 const tblTest = require('./tblTest.js');
-// const test = require('./test.js');
-// const testAll = require('./testAll.js');
+// const timerTest = require('./timerTest.js');
 
 module.exports = {
   arrTest,
@@ -24,7 +23,6 @@ module.exports = {
   objTest,
   strTest,
   tblTest, 
-  // test,
-  // testAll,
+  // timerTest,
 }
 

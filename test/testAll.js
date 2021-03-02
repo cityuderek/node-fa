@@ -8,7 +8,6 @@ const test = require('../test');
 // console.log(`str ` + nfa.strCamelize('fish wav'))
 // console.log(`str ` + nfa.isEqual('fish', 'fish'))
 
-
 const main = async ()=>{
   console.clear();
   console.log('testAll ' + nfa.nowDtmStr());
