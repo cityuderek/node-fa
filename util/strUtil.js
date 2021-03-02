@@ -8,6 +8,17 @@
 // console.log('load strUtil');
 
 //// string ////////////////////////////////////////////////////////////////////
+
+const isEmptyStr = (str)=>{
+  return !isNonEmptyStr(str);
+};
+exports.isEmptyStr = isEmptyStr;
+
+const isNonEmptyStr = (str)=>{
+  return typeof str === 'string' && str.length > 0;
+};
+exports.isNonEmptyStr = isNonEmptyStr;
+
 const showStr = (str, title = 'str')=>{
   if(str === null){
     console.log(`${title} is null`);

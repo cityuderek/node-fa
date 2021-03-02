@@ -8,8 +8,10 @@ const dtUtil = require('./dtUtil')
 const fileUtil = require('./fileUtil')
 const objUtil = require('./objUtil')
 const mathUtil = require('./mathUtil')
+const networkUtil = require('./networkUtil')
 const nfa = require('./nfa')
 const strUtil = require('./strUtil')
+const tblUtil = require('./tblUtil')
 const testUtil = require('./testUtil')
 
 module.exports = { 
@@ -17,8 +19,10 @@ module.exports = {
     dtUtil, 
     fileUtil,
     mathUtil, 
+    networkUtil,
     nfa,
     objUtil, 
     strUtil, 
+    tblUtil,
     testUtil,
 }

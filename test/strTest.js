@@ -4,6 +4,18 @@ const test = () => {
   console.log('strTest.test');
   testUtil.setShowAll(0);
   testUtil.resetRs();
+
+  testUtil.testFunc(nfa.isEmptyStr, true, null, "");
+  testUtil.testFunc(nfa.isEmptyStr, true, null, null);
+  testUtil.testFunc(nfa.isEmptyStr, true, null, undefined);
+  testUtil.testFunc(nfa.isEmptyStr, false, null, "1");
+  testUtil.testFunc(nfa.isEmptyStr, false, null, "0");
+  testUtil.testFunc(nfa.isNonEmptyStr, false, null, "");
+  testUtil.testFunc(nfa.isNonEmptyStr, false, null, null);
+  testUtil.testFunc(nfa.isNonEmptyStr, false, null, undefined);
+  testUtil.testFunc(nfa.isNonEmptyStr, true, null, "1");
+  testUtil.testFunc(nfa.isNonEmptyStr, true, null, "0");
+
   let str1 = 'Aa Bb C Ddd Eee';
   let str2 = 'aa bb c ddd eee';
   let str3 = 'aa-bb-c-ddd-eee';

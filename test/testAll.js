@@ -12,13 +12,16 @@ const test = require('../test');
 const isShowAll = 0;
 testUtil.setShowAll(isShowAll);
 
-Object.keys(test).forEach(key=>{
-    let testMod = test[key];
-    if(typeof testMod.test == 'function'){
-        console.log(`\ntestMod=${key}`);
-        testMod.test()
-    }
-})
+const main = async ()=>{
+  for(const key of Object.keys(test)){
+      let testMod = test[key];
+      if(typeof testMod.test == 'function'){
+          console.log(`\ntestMod=${key}`);
+          await testMod.test()
+      }
+  }
+}
+main();
 
 // nfa.test();
 // mathUtil.test();

@@ -5,8 +5,20 @@ const getCtt = async (url)=>{
   let resp = await axios.get(url).catch(()=>null)
   if(resp && resp.data){
     let ctt = resp.data;
-    networkCacheHelper.writeCtt(url, ctt);
+    // networkCacheHelper.writeCtt(url, ctt);
     return ctt;
   }
   return '';
 }
+module.exports.getCtt = getCtt;
+
+const getJson = async (url)=>{
+  let resp = await axios.get(url).catch(()=>null)
+  if(resp && resp.data){
+    let ctt = resp.data;
+    // networkCacheHelper.writeCtt(url, ctt);
+    return ctt;
+  }
+  return '';
+}
+module.exports.getJson = getJson;
