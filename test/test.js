@@ -8,8 +8,9 @@
 // });
 // const dtUtil = require('./helpers/dtUtil');
 // const strUtil = require('./helpers/strUtil');
-const { nfa, fileUtil, testUtil } = require('../util')
+const { nfa, fileUtil } = require('../util')
 const { strTest } = require('../test')
+const testUtil = new (require('../util/TestUtil'))(false);
 // console.log('dtUtil1', dtUtil)
 
 strTest.test()

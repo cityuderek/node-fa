@@ -13,7 +13,6 @@ const networkUtil = require('./networkUtil')
 const nfa = require('./nfa')
 const strUtil = require('./strUtil')
 const tblUtil = require('./tblUtil')
-const testUtil = require('./testUtil')
 
 module.exports = { 
     arrUtil, 
@@ -26,5 +25,4 @@ module.exports = {
     nfa,
     strUtil, 
     tblUtil,
-    testUtil,
 }

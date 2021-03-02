@@ -1,11 +1,11 @@
-const { nfa, testUtil } = require('../util')
+const { nfa } = require('../util')
+const testUtil = new (require('../util/TestUtil'))(false);
 
 const test = () => {
   console.log('nfaTest.test');
   const isTestAll = 1;
   const isShowAll = !isTestAll;
   testUtil.setShowAll(isShowAll);
-  testUtil.resetRs();
   const obj = {
     'v_null': null,
     'v_nan': NaN,

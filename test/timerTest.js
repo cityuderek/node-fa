@@ -1,9 +1,9 @@
-const { nfa, testUtil, networkUtil } = require('../util')
+const { nfa, networkUtil } = require('../util')
 const { timer, networkCacheHelper } = require('../helpers')
+const testUtil = new (require('../util/TestUtil'))(false);
 
 const test = async() => {
   console.log('timerTest.test' + Date.now());
-  testUtil.resetRs();
   // testUtil.testFunc(nfa.round, 123.5, null, 123.456, 1);
   let json;
   let url1 = 'https://api.myip.com';

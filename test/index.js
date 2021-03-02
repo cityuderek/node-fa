@@ -1,7 +1,6 @@
 // @create-index
 
 const arrTest = require('./arrTest.js');
-const dataTypeTest = require('./dataTypeTest.js');
 const dtTest = require('./dtTest.js');
 const fileTest = require('./fileTest.js');
 const mathTest = require('./mathTest.js');
@@ -14,7 +13,6 @@ const tblTest = require('./tblTest.js');
 
 module.exports = {
   arrTest,
-  dataTypeTest,
   dtTest,
   fileTest,
   mathTest,

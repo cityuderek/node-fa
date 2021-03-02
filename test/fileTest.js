@@ -1,8 +1,8 @@
-const { nfa, testUtil, fileUtil } = require('../util')
+const { nfa, fileUtil } = require('../util')
+const testUtil = new (require('../util/TestUtil'))(false);
 
 const test = () => {
   console.log('fileTest.test');
-  testUtil.resetRs();
   // testUtil.testFunc(Math.round, 123, null, 123.456);
   let path1 = './test/fixtures/file/json1.json';
   let ctt =  fileUtil.readFileSync(path1);

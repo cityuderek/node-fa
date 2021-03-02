@@ -1,80 +1,79 @@
-const nfa = require('./nfa');
+const objUtil = require('./objUtil');
 
 // console.log('load testUtil');
-// console.log(`str ` + nfa.strCamelize('fish wav'))
-// console.log(`str ` + nfa.isEqual('fish', 'fish'))
 
-const test = () => {
-  console.log('testUtil.test');
-  testFunc(Math.round, 123, null, 123.456);
-}
-module.exports.test = test
+// const test = () => {
+//   console.log('testUtil.test');
+//   testFunc(Math.round, 123, null, 123.456);
+// }
 
-let isShowAll = true;
-let rsData = {};
+class TestUtil {
+  isShowAll;
+  rsData = {};
 
-//// util
-const setShowAll = b=>isShowAll = b
-module.exports.setShowAll = setShowAll
+  constructor(isShowAll = true){
+    this.isShowAll = isShowAll;
+  }
 
-const testFunc = (func, expVal, paramName = null, ...params) => {
-  let rs = func(...params);
-  return handleRs(func.name, expVal, rs, paramName, ...params);
-}
-module.exports.testFunc = testFunc
 
-const handleRs = (funcName, expVal, actVal, paramName = null, ...params) => {
-  const showRs = (msg, paramName, params)=>{
-    if(paramName === null){
-      console.log(msg, params);
+  //// util
+  setShowAll = b=>this.isShowAll = b;
+
+  testFunc = (func, expVal, paramName = null, ...params) => {
+    let rs = func(...params);
+    return this.handleRs(func.name, expVal, rs, paramName, ...params);
+  }
+
+  handleRs = (funcName, expVal, actVal, paramName = null, ...params) => {
+    const showRs = (msg, paramName, params)=>{
+      if(paramName === null){
+        console.log(msg, params);
+
+      }else{
+        console.log(msg + paramName);
+      }
+    }
+
+    let isExp = objUtil.isEqual(actVal, expVal);
+    let expValLen = objUtil.length(expVal);
+    let actValLen = objUtil.length(actVal);
+    // if(!isExp){
+    //   const moment = require('moment');
+    //   console.log('~', moment(actVal).isSame(expVal));
+    // }
+    let msg = (isExp ? 'OK  ': 'FAIL') + ", func=" + funcName + 
+    ", expVal(" + objUtil.getType(expVal) + (expValLen ? ', ' + expValLen : '') + ")=" + expVal + 
+    ", actVal(" + objUtil.getType(actVal) + (actValLen ? ', ' + actValLen : '') + ")=" + actVal + 
+    ", params=";
+    if(this.isShowAll || !isExp){
+      showRs(msg, paramName, params);
+    }
+    this.addRs(isExp)
+    return isExp;
+  }
+
+  //// counter
+  addRs = (obj)=>{
+    if(typeof this.rsData[obj] === 'undefined'){
+      this.rsData[obj] = 1;
 
     }else{
-      console.log(msg + paramName);
+      this.rsData[obj]++;
     }
   }
 
-  let isExp = nfa.isEqual(actVal, expVal);
-  let expValLen = nfa.length(expVal);
-  let actValLen = nfa.length(actVal);
-  // if(!isExp){
-  //   const moment = require('moment');
-  //   console.log('~', moment(actVal).isSame(expVal));
-  // }
-  let msg = (isExp ? 'OK  ': 'FAIL') + ", func=" + funcName + 
-  ", expVal(" + nfa.getType(expVal) + (expValLen ? ', ' + expValLen : '') + ")=" + expVal + 
-  ", actVal(" + nfa.getType(actVal) + (actValLen ? ', ' + actValLen : '') + ")=" + actVal + 
-  ", params=";
-  if(isShowAll || !isExp){
-    showRs(msg, paramName, params);
-  }
-  addRs(isExp)
-  return isExp;
-}
-module.exports.handleRs = handleRs
+  rsCnt = (obj)=>typeof this.rsData[obj] === 'undefined' ? 0: this.rsData[obj]
 
-//// counter
-const addRs = (obj)=>{
-  if(typeof rsData[obj] === 'undefined'){
-    rsData[obj] = 1;
+  resetRs = (obj)=>{ this.rsData = {} }
 
-  }else{
-    rsData[obj]++;
+  showAllRs = ()=>{
+    if(objUtil.isEmptyObj(this.rsData)){
+        console.log('Counter empty');
+
+    }else{
+        console.log('Counter', this.rsData);
+    }
   }
 }
-module.exports.addRs = addRs
 
-const rsCnt = (obj)=>typeof rsData[obj] === 'undefined' ? 0: rsData[obj]
-module.exports.rsCnt = rsCnt
-
-const resetRs = (obj)=>{ rsData = {} }
-module.exports.resetRs = resetRs
-
-const showAllRs = ()=>{
-  if(nfa.isEmptyObj(rsData)){
-      console.log('Counter empty');
-
-  }else{
-      console.log('Counter', rsData);
-  }
-}
-module.exports.showAllRs = showAllRs
+module.exports = TestUtil

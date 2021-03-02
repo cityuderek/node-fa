@@ -1,9 +1,9 @@
-const { nfa, testUtil } = require('../util')
+const { nfa } = require('../util')
+const testUtil = new (require('../util/TestUtil'))(false);
 
 const test = () => {
   console.log('strTest.test');
   testUtil.setShowAll(0);
-  testUtil.resetRs();
 
   testUtil.testFunc(nfa.isEmptyStr, true, null, "");
   testUtil.testFunc(nfa.isEmptyStr, true, null, null);

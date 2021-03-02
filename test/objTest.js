@@ -1,9 +1,15 @@
 const moment = require('moment');
-const { nfa, testUtil } = require('../util');
+const { nfa } = require('../util');
+const testUtil = new (require('../util/TestUtil'))(false);
 
 const test = () => {
   console.log('objTest.test');
-  testUtil.resetRs();
+  
+  let rs = nfa.getType('fish');
+  testUtil.handleRs('getType', `string`, rs, 'fish');
+  testUtil.testFunc(nfa.getType, `string`, null, '111');
+  testUtil.testFunc(nfa.getType, `integer`, null, 222);
+  
   testUtil.testFunc(nfa.isEqual, true, null, moment('2021-01-06'), moment('2021-01-06'));
   testUtil.testFunc(nfa.isEqual, false, null, moment('2021-09-01'), moment('2021-01-06'));
   testUtil.testFunc(nfa.isNullGroup, false, null, 'abc');

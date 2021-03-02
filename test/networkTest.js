@@ -1,10 +1,10 @@
-const { nfa, testUtil, networkUtil } = require('../util')
+const { nfa, networkUtil } = require('../util')
 const { networkCacheHelper } = require('../helpers')
+const testUtil = new (require('../util/TestUtil'))(false);
 
 const test = async() => {
   console.log('networkTest.test');
   // testUtil.setShowAll(1);
-  testUtil.resetRs();
   // testUtil.testFunc(nfa.isEqual, true, null, moment('2021-01-06'), moment('2021-01-06'));
   // testUtil.testFunc(nfa.isEqual, false, null, moment('2021-09-01'), moment('2021-01-06'));
 

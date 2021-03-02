@@ -1,6 +1,6 @@
 const { nfa } = require('../util');
-const { testUtil } = require('../util');
 const test = require('../test');
+const testUtil = new (require('../util/TestUtil'))(false);
 
 // console.log('dtUtil1', dtUtil);
 // console.log('util=', util);

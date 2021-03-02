@@ -4,7 +4,6 @@ const _ = require('lodash');
 
 module.exports = {
   ...require('./arrUtil'),
-  ...require('./dataTypeUtil'),
   ...require('./dtUtil'),
   ...require('./jsonUtil'),
   ...require('./mathUtil'),
@@ -13,7 +12,6 @@ module.exports = {
 }
 
 // const arrUtil = require('./arrUtil');
-// const dataTypeUtil = require('./dataTypeUtil');
 // const dtUtil = require('./dtUtil');
 // const mathUtil = require('./mathUtil');
 // const objUtil = require('./objUtil');
@@ -21,7 +19,6 @@ module.exports = {
 // console.log('arrUtil', arrUtil);
 // module.exports = {
 //   ...arrUtil,
-//   ...dataTypeUtil,
 //   ...dtUtil,
 //   ...mathUtil,
 //   ...objUtil,
