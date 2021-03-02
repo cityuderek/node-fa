@@ -1,5 +1,6 @@
 const fs = require('fs')
-const { nfa } = require('./nfa')
+const jsonUtil = require('./jsonUtil')
+const objUtil = require('./objUtil')
 
 //// read file ////////////////////////////////////////////////////////////////
 const readFileSync = (filepath, encoding = 'utf8', defVal = "")=>{
@@ -9,6 +10,14 @@ const readFileSync = (filepath, encoding = 'utf8', defVal = "")=>{
   return defVal;
 }
 exports.readFileSync = readFileSync
+
+const readJsonSync = (filepath, encoding = 'utf8', defVal = null)=>{
+  if(existsSync(filepath)){
+    return jsonUtil.parseJson(fs.readFileSync(filepath, 'utf8'), defVal);
+  }
+  return defVal;
+}
+exports.readJsonSync = readJsonSync
 
 const readAllLines = (filepath, options)=>{
     let ctt = fs.readFileSync(filepath, 'utf8');
@@ -20,8 +29,8 @@ exports.readAllLines = readAllLines
 
 const readCsv = (filepath, options)=>{
     const parse = require('csv-parse/lib/sync')
-    let cnt = nfa.gov(options, 0, 'cnt');
-    let skip = nfa.gov(options, 0, 'skip');
+    let cnt = objUtil.gov(options, 0, 'cnt');
+    let skip = objUtil.gov(options, 0, 'skip');
     let ctt = fs.readFileSync(filepath, 'utf8');
     let records = parse(ctt, {
         columns: true,
@@ -88,6 +97,12 @@ const writeFileSync = (path, ctt)=>{
   fs.writeFileSync(path, ctt);
 };
 exports.writeFileSync = writeFileSync;
+
+const writeJsonSync = (path, json)=>{
+  ctt = JSON.stringify(json);
+  fs.writeFileSync(path, ctt);
+};
+exports.writeJsonSync = writeJsonSync;
 
 //// file ////////////////////////////////////////////////////////////////
 

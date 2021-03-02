@@ -19,6 +19,11 @@ const test = () => {
 ]
 `, ctt, path1);
 
+
+  let json =  fileUtil.readJsonSync(path1);
+  // console.log('json', json);
+  testUtil.handleRs('readJsonSync', `222`, nfa.gov(json, null, 0, 'value'), path1);
+
   testUtil.showAllRs();
 }
 module.exports.test = test
