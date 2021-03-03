@@ -1,13 +1,10 @@
-// import { signUpValidation, loginValidation } from "~/utils/inputValidation";
-
-// const rmSpecialChars = (str)=>{
-//   if(!str) return "";
-//   return str.replace(/ /g, '_').replace(/[^a-zA-Z0-9_]/g, '').toLowerCase();
-// }
-
-// console.log('load strUtil');
+const arrUtil = require('./arrUtil');
 
 //// string ////////////////////////////////////////////////////////////////////
+const split = (str, seperator, targetLen) =>{
+  let strs = str.split(seperator);
+  return arrUtil.fixArrLen(strs, targetLen, '');
+}
 
 const isEmptyStr = (str)=>{
   return !isNonEmptyStr(str);

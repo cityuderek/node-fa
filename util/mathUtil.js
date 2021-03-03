@@ -57,4 +57,14 @@ const parseIntRnd = (str)=>{
 };
 module.exports.parseIntRnd = parseIntRnd;
 
+const randInt = (min, max) =>{
+  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+module.exports.randInt = randInt;
+
 //// float ///////////////////////////////////////////////////////////////////
+
+const rand = (min, max) =>{
+  return Math.random() * (max - min) + min;
+}
+module.exports.rand = rand;
