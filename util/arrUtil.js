@@ -1,9 +1,4 @@
-
-// const test = () => {
-//   console.log(__filename + '.test');
-//   // testUtil.testFunc(Math.round, 123, null, 123.456);
-// }
-// module.exports.test = test
+const objUtil = require('./objUtil')
 
 //// array /////////////////////////////////////////////////////////////////////
 const fixArrLen = (arr, targetLen, fillValue) =>{
@@ -33,8 +28,8 @@ module.exports.kVArrToObj = kVArrToObj
 
 const newArr = (arraySize, val)=>{
   let arr = [];
-  if(nfa.isObj(val)){
-      while(arraySize--) arr.push(nfa.clone(val))
+  if(objUtil.isObj(val)){
+      while(arraySize--) arr.push(objUtil.clone(val))
 
   }else{
       // while(arraySize--) arr.push(val);
@@ -67,11 +62,25 @@ const show = (arr, title = "")=>{
 module.exports.show = show
 
 
-const showArr = (arr, title = undefined) => {
+const showArr = (arr, title = undefined, options = {}) => {
+  const { cond } = options;
   console.log('Array(' + title + ')=', arr.length);
-  arr.map(item=>{
-      console.log('item=', item);
-  })
+  let showCnt = 0;
+  arr.map((item, i)=>{
+    let isShow = !cond || cond(item);
+    if(isShow){
+      console.log(`item(${i})=`, item);
+      showCnt++;
+    }
+  });
+  if(cond){
+    if(showCnt == arr.length){
+      console.log(`fulfillCnt/all=all`);
+
+    }else{
+      console.log(`fulfillCnt/all=${showCnt}/${arr.length}`);
+    }
+  }
 };
 module.exports.showArr = showArr
 // module.exports = { kVArrToObj }

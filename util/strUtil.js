@@ -53,7 +53,7 @@ const strCamel = (data)=>{
   if(Array.isArray(data)){
     let arr = [];
     data.map(str=>{
-      arr.push(camelize(str));
+      arr.push(strCamel(str));
     })
     return arr;
   }

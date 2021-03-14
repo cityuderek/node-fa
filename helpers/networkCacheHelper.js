@@ -1,6 +1,6 @@
 const { URL } = require('url');
 const md5 = require('md5');
-const { nfa, fileUtil, networkUtil } = require('../util')
+const { nfa, fileUtil, networkUtil } = require('../util');
 
 let folder = '/'
 
@@ -57,6 +57,11 @@ const setFolder = (newFolder)=>{
   folder = newFolder;
 };
 exports.setFolder = setFolder;
+
+const getFolder = ()=>{
+  return process.env.NFA_PROJ_PROPERTY_FODLER || folder;
+}
+exports.getFolder = getFolder;
 
 const readCtt = (url)=>{
   let filepath = getFilePath(url);

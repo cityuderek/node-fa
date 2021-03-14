@@ -1,6 +1,8 @@
 const fs = require('fs')
 const jsonUtil = require('./jsonUtil')
 const objUtil = require('./objUtil')
+const strUtil = require('./strUtil')
+const arrUtil = require('./arrUtil')
 
 //// read file ////////////////////////////////////////////////////////////////
 const readFileSync = (filepath, encoding = 'utf8', defVal = "")=>{
@@ -61,7 +63,7 @@ const readTsv = (filepath, options = {})=>{
   let arr = [];
   if(isObj){
     let headers = lines[0].split("\t");
-    headers = strUtil.camelize(headers);
+    headers = strUtil.strCamel(headers);
     // console.log('headers=', headers);
     if(maxCnt > 0){
       lines = lines.slice(1 + skip, maxCnt + 1 + skip);

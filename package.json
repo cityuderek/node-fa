@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "csv-parse": "^4.15.3",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "moment": "^2.29.1"
