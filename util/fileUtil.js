@@ -1,8 +1,12 @@
-const fs = require('fs')
-const jsonUtil = require('./jsonUtil')
-const objUtil = require('./objUtil')
-const strUtil = require('./strUtil')
-const arrUtil = require('./arrUtil')
+const fs = require('fs');
+const glob = require("glob");
+const jsonUtil = require('./jsonUtil');
+const objUtil = require('./objUtil');
+const strUtil = require('./strUtil');
+const arrUtil = require('./arrUtil');
+const nodeUtil = require('./nodeUtil');
+
+const globAsync = nodeUtil.promisify(glob);
 
 //// read file ////////////////////////////////////////////////////////////////
 const readFileSync = (filepath, encoding = 'utf8', defVal = "")=>{
@@ -11,7 +15,7 @@ const readFileSync = (filepath, encoding = 'utf8', defVal = "")=>{
   }
   return defVal;
 }
-exports.readFileSync = readFileSync
+exports.readFileSync = readFileSync;
 
 const readJsonSync = (filepath, encoding = 'utf8', defVal = null)=>{
   if(existsSync(filepath)){
@@ -19,7 +23,7 @@ const readJsonSync = (filepath, encoding = 'utf8', defVal = null)=>{
   }
   return defVal;
 }
-exports.readJsonSync = readJsonSync
+exports.readJsonSync = readJsonSync;
 
 const readAllLines = (filepath, options)=>{
     let ctt = fs.readFileSync(filepath, 'utf8');
@@ -27,7 +31,7 @@ const readAllLines = (filepath, options)=>{
 
     return lines;
 }
-exports.readAllLines = readAllLines
+exports.readAllLines = readAllLines;
 
 const readCsv = (filepath, options)=>{
     const parse = require('csv-parse/lib/sync')
@@ -49,7 +53,7 @@ const readCsv = (filepath, options)=>{
     }
     return records;
 }
-exports.readCsv = readCsv
+exports.readCsv = readCsv;
 
 const readTsv = (filepath, options = {})=>{
   let {isObj = true, maxCnt = 0, skip = 0} = options;
@@ -107,7 +111,6 @@ const writeJsonSync = (path, json)=>{
 exports.writeJsonSync = writeJsonSync;
 
 //// file ////////////////////////////////////////////////////////////////
-
 const existsSync = (path)=>{
   return fs.existsSync(path);
 }
@@ -120,3 +123,10 @@ const mkdirSync = (dir)=>{
   }
 }
 exports.mkdirSync = mkdirSync;
+
+const listFiles = async (dirPath)=>{
+  // glob('*.js', {}, (err, results) => console.log(results))
+  let rs = await globAsync(dirPath);
+  return rs;
+}
+exports.listFiles = listFiles;
