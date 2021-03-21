@@ -1,10 +1,49 @@
 const arrUtil = require('./arrUtil');
+/*
+eg
+
+    let str = "abcdecf";
+    let key = 'c';
+    let i = 3;
+    console.log(`patterns`, nfa.cutStrBefore(str, key, i));
+
+*/
+//// count /////////////////////////////////////////////////////////////////////
+const countOccurrence = (str, regex)=>{
+  return (str.match(regex) || []).length;
+}
+exports.countOccurrence = countOccurrence;
+
+//// cut /////////////////////////////////////////////////////////////////////
+const cutStrBefore = (str, key, n = 1) =>{
+  // console.log('str', str);
+  // const regex = new RegExp("(.*" + key + "){" + n + "}(.+)");
+  // const rs = regex.exec(str);
+  // // console.log(`exec`, regex, str);
+  // // console.log('str', str);
+  // console.log('rs', rs);
+  // return rs ? rs[n] : "";
+
+  // let rs = new RegExp("(.*c){" + i + "}(.+)").exec(str);
+  // str = rs ? rs[i] : "";
+  if(str === null) return "";
+  const regex = new RegExp(".*" + key);
+  while(n > 0 && str !== ""){
+    str = str.replace(regex, "");
+    n--;
+  }
+  return str;
+  // console.log(`str2`, str.replace(/.*\n/, ""));
+
+}
+exports.cutStrBefore = cutStrBefore;
 
 //// string ////////////////////////////////////////////////////////////////////
 const split = (str, seperator, targetLen) =>{
   let strs = str.split(seperator);
   return arrUtil.fixArrLen(strs, targetLen, '');
 }
+exports.split = split;
 
 const isEmptyStr = (str)=>{
   return !isNonEmptyStr(str);

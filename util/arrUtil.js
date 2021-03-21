@@ -1,5 +1,12 @@
 const objUtil = require('./objUtil')
 
+//// get /////////////////////////////////////////////////////////////////////
+const last = (arr, defVal = null) =>{
+  if(!Array.isArray(arr) || arr.length === 0) return defVal;
+  return arr[arr.length - 1];
+}
+module.exports.last = last;
+
 //// array /////////////////////////////////////////////////////////////////////
 const fixArrLen = (arr, targetLen, fillValue) =>{
   if(arr.length > targetLen){
@@ -11,6 +18,7 @@ const fixArrLen = (arr, targetLen, fillValue) =>{
 
   return arr;
 }
+module.exports.fixArrLen = fixArrLen;
 
 const pushIfNotNull = (arr, item)=>{
   if(item !== null) arr.push(item);
