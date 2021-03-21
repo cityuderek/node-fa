@@ -25,6 +25,9 @@ const round = (num, n = 0)=>{
 }
 module.exports.round = round
 
+const gt0 = (num)=>parseFloat(num) > 0;
+module.exports.gt0 = gt0
+
 //// integer ///////////////////////////////////////////////////////////////////
 const parseInt = (param1)=>{
   if(typeof param1 === 'string'){
@@ -68,3 +71,20 @@ const rand = (min, max) =>{
   return Math.random() * (max - min) + min;
 }
 module.exports.rand = rand;
+
+const parseFloat = (str, defVal = 0)=>{
+  let val = Number.parseFloat(str);
+  return isNaN(val) ? defVal : val;
+}
+module.exports.parseFloat = parseFloat;
+
+//// string ////////////////////////////////////////////////////////.////////////
+const numNPercStr = (num, tot, decimal = 2, defVal = '')=>{
+  if(num === null) return defVal;
+  if(!tot || tot === '0') return num;
+  // console.log(`typeof=${typeof(tot)}, tot=${tot}`);
+  let prec = 100 * num / tot;
+  // console.log(`num=${num}, tot=${tot}, decimal=${decimal}, defVal=${defVal}, prec=${prec} `, `${num} (${round(prec, decimal)}%)`);
+  return `${num} (${round(prec, decimal)}%)`;
+}
+module.exports.numNPercStr = numNPercStr;

@@ -27,7 +27,7 @@ module.exports.pushIfNotNull = pushIfNotNull;
 
 const kVArrToObj = (keys, vals)=>{
   let obj = {};
-  keys.map((key, i)=>{
+  keys.forEach((key, i)=>{
       obj[key] = vals[i];
   })
   return obj;
@@ -63,7 +63,7 @@ module.exports.indexOfVal = indexOfVal;
 //// show //////////////////////////////////////////////////////////////////////
 const show = (arr, title = "")=>{
   console.log('Array(' + title + ')=', arr.length);
-  arr.map(item=>{
+  arr.forEach(item=>{
       console.log('item=', item);
   })
 }
@@ -74,7 +74,7 @@ const showArr = (arr, title = undefined, options = {}) => {
   const { cond } = options;
   console.log('Array(' + title + ')=', arr.length);
   let showCnt = 0;
-  arr.map((item, i)=>{
+  arr.forEach((item, i)=>{
     let isShow = !cond || cond(item);
     if(isShow){
       console.log(`item(${i})=`, item);
@@ -82,7 +82,7 @@ const showArr = (arr, title = undefined, options = {}) => {
     }
   });
   if(cond){
-    if(showCnt == arr.length){
+    if(showCnt === arr.length){
       console.log(`fulfillCnt/all=all`);
 
     }else{
