@@ -135,9 +135,9 @@ const test = () => {
   }
 
   // console.log(nfa.ovExists(obj3, 'v1'));
-  testUtil.testFunc('ovExists', nfa.ovExists, true, obj3, 'v1');
-  testUtil.testFunc('ovExists', nfa.ovExists, true, obj3, 'obj2');
-  testUtil.testFunc('ovExists', nfa.ovExists, true, obj3, 'obj2', 'v2');
+  testUtil.testFunc('ovExists 1', nfa.ovExists, true, obj3, 'v1');
+  testUtil.testFunc('ovExists 2', nfa.ovExists, true, obj3, 'obj2');
+  testUtil.testFunc('ovExists 3', nfa.ovExists, true, obj3, 'obj2', 'v2');
   
   let rs = nfa.getType('fish');
   testUtil.handleRs('getType', `string`, rs, 'fish');
@@ -161,21 +161,65 @@ const test = () => {
   // console.log('a', typeof NaN);
   // console.log('a', isNaN(obj));
   let obj1 = {
-    name: "fish"
+    name1: "fish",
+    name2: "",
+    name3: null,
   }
   let obj2 = {
   }
-  testUtil.testFunc('gov1', nfa.gov, 'fish', obj1, 'defVal', 'name');
-  testUtil.testFunc('gov2', nfa.gov, 'defVal', obj2, 'defVal', 'name');
-  testUtil.testFunc('gov3', nfa.gov, 'defVal', null, 'defVal', 'name');
-  testUtil.testFunc('gov4', nfa.gov, 'defVal', undefined, 'defVal', 'name');
+  testUtil.testFunc('gov1', nfa.gov, 'fish', obj1, 'defVal', 'name1');
+  testUtil.testFunc('gov2', nfa.gov, 'defVal', obj2, 'defVal', 'name1');
+  testUtil.testFunc('gov3', nfa.gov, 'defVal', null, 'defVal', 'name1');
+  testUtil.testFunc('gov4', nfa.gov, 'defVal', undefined, 'defVal', 'name1');
   testUtil.testFunc('gov5', nfa.gov, 'defVal', obj1, 'defVal', null);
   testUtil.testFunc('gov6', nfa.gov, 'defVal', obj1, 'defVal', undefined);
 
 
+  testUtil.testFunc('ifNull 1', nfa.ifNull, 106, 106, 'defVal');
+  testUtil.testFunc('ifNull 2', nfa.ifNull, 0, 0, 'defVal');
+  testUtil.testFunc('ifNull 3', nfa.ifNull, false, false, 'defVal');
+  testUtil.testFunc('ifNull 4', nfa.ifNull, 'defVal', null, 'defVal');
+  testUtil.testFunc('ifNull 5', nfa.ifNull, 'defVal', NaN, 'defVal');
 
+  testUtil.testFunc('ifExactNull 1', nfa.ifExactNull, 106, 106, 'defVal');
+  testUtil.testFunc('ifExactNull 2', nfa.ifExactNull, 0, 0, 'defVal');
+  testUtil.testFunc('ifExactNull 3', nfa.ifExactNull, false, false, 'defVal');
+  testUtil.testFunc('ifExactNull 4', nfa.ifExactNull, 'defVal', null, 'defVal');
+  testUtil.testFunc('ifExactNull 5', nfa.ifExactNull, NaN, NaN, 'defVal');
 
+  testUtil.testFunc('isOvNotEmptyStr 1', nfa.isOvNotEmptyStr, false, obj1, 'name0');
+  testUtil.testFunc('isOvNotEmptyStr 2', nfa.isOvNotEmptyStr, true, obj1, 'name1');
+  testUtil.testFunc('isOvNotEmptyStr 3', nfa.isOvNotEmptyStr, false, obj1, 'name2');
+  testUtil.testFunc('isOvNotEmptyStr 4', nfa.isOvNotEmptyStr, false, obj1, 'name3');
   
+  testUtil.testFunc('isEmpty 1', nfa.isEmpty, true, null);
+  testUtil.testFunc('isEmpty 2', nfa.isEmpty, true, undefined);
+  testUtil.testFunc('isEmpty 3', nfa.isEmpty, true, NaN);
+  testUtil.testFunc('isEmpty 4', nfa.isEmpty, true, "");
+  testUtil.testFunc('isEmpty 5', nfa.isEmpty, true, {});
+  testUtil.testFunc('isEmpty 6', nfa.isEmpty, true, []);
+  testUtil.testFunc('isEmpty 7', nfa.isEmpty, false, obj1);
+  testUtil.testFunc('isEmpty 7', nfa.isEmpty, false, "106");
+  testUtil.testFunc('isEmpty 8', nfa.isEmpty, false, "0");
+  testUtil.testFunc('isEmpty 9', nfa.isEmpty, false, "false");
+  testUtil.testFunc('isEmpty 10', nfa.isEmpty, false, "true");
+  testUtil.testFunc('isEmpty 11', nfa.isEmpty, false, false);
+  testUtil.testFunc('isEmpty 12', nfa.isEmpty, false, true);
+  
+  testUtil.testFunc('isNonEmpty 1', nfa.isNonEmpty, false, null);
+  testUtil.testFunc('isNonEmpty 2', nfa.isNonEmpty, false, undefined);
+  testUtil.testFunc('isNonEmpty 3', nfa.isNonEmpty, false, NaN);
+  testUtil.testFunc('isNonEmpty 4', nfa.isNonEmpty, false, "");
+  testUtil.testFunc('isNonEmpty 5', nfa.isNonEmpty, false, {});
+  testUtil.testFunc('isNonEmpty 6', nfa.isNonEmpty, false, []);
+  testUtil.testFunc('isNonEmpty 7', nfa.isNonEmpty, true, obj1);
+  testUtil.testFunc('isNonEmpty 7', nfa.isNonEmpty, true, "106");
+  testUtil.testFunc('isNonEmpty 8', nfa.isNonEmpty, true, "0");
+  testUtil.testFunc('isNonEmpty 9', nfa.isNonEmpty, true, "false");
+  testUtil.testFunc('isNonEmpty 10', nfa.isNonEmpty, true, "true");
+  testUtil.testFunc('isNonEmpty 11', nfa.isNonEmpty, true, false);
+  testUtil.testFunc('isNonEmpty 12', nfa.isNonEmpty, true, true);
+
   testUtil.showAllRs();
 }
 module.exports.test = test

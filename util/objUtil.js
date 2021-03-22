@@ -3,6 +3,11 @@ const moment = require('moment');
 // const nfa = require('./nfa')
 
 // console.log('load objUtil');
+const ifNull = (obj, defVal) => obj === null || isNaN(obj) ? defVal : obj;
+module.exports.ifNull = ifNull
+
+const ifExactNull = (obj, defVal) => obj === null ? defVal : obj;
+module.exports.ifExactNull = ifExactNull
 
 //// object ////////////////////////////////////////////////////////////////////
 //// get object value, not allow false
@@ -110,6 +115,28 @@ module.exports.isEmptyObj = isEmptyObj;
 
 const isNonEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length > 0;
 module.exports.isNonEmptyObj = isNonEmptyObj;
+
+const isEmpty = obj=>{
+  if(obj === null) return true;
+  if(obj === '') return true;
+  if(obj !== obj) return true;  // NaN
+  if(Array.isArray(obj) && obj.length === 0) return true;
+  const ty = typeof(obj);
+  if(ty === 'undefined') return true;
+  if(ty === 'object' && Object.keys(obj).length === 0) return true;
+  
+  return false;
+}
+module.exports.isEmpty = isEmpty;
+
+const isNonEmpty = obj=>!isEmpty(obj);
+module.exports.isNonEmpty = isNonEmpty;
+
+const isOvNotEmptyStr = (obj, ...keys) => {
+  const val = gov(obj, "", ...keys);
+  return typeof(val) === 'string' && val !== '';
+};
+module.exports.isOvNotEmptyStr = isOvNotEmptyStr;
 
 const ovEquals = (obj, expectedVal, ...keys) => {
   if(expectedVal === null){

@@ -16,6 +16,10 @@ const testFunc = (func, expVal, ...params) => {
 }
 module.exports.testFunc = testFunc
 
+//// NaN //////////////////////////////////////////////////////////////////////
+const isExactNaN = (obj)=>obj !== obj;
+module.exports.isExactNaN = isExactNaN
+
 //// number ///////////////////////////////////////////////////////////////////
 const round = (num, n = 0)=>{
   const base = Math.pow(10, n);
