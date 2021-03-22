@@ -16,9 +16,9 @@
     "start": "node index.js",
     "test": "jest",
     "testJs": "node test/test.js",
-    "testJsN": "nodemon --watch util --watch helper --watch test --watch . test/test.js",
+    "monTestJs": "nodemon --watch util --watch helper --watch test --watch . test/test.js",
     "testAll": "node test/testAll.js",
-    "testAllN": "nodemon --watch util --watch helper --watch test  --watch testAll.js test/testAll.js",
+    "monTestAll": "nodemon --watch util --watch helper --watch test  --watch testAll.js test/testAll.js",
     "check-env": "node -e 'console.log(process.env)' | grep npm"
   },
   "license": "MIT License",

@@ -10,9 +10,9 @@ const test = () => {
     {name : 'name3', val: 333},
   ]
   // let testUtil = new TestUtil();
-  testUtil.testFunc(nfa.indexOfVal, 2, null, arr1, 'name', 'name3');
+  testUtil.testFunc('indexOfVal', nfa.indexOfVal, 2, arr1, 'name', 'name3');
   testUtil.showAllRs();
   // console.log(nfa.indexOfVal(arr1, 'name', 'name3'));
-  // testUtil.testFunc(Math.round, 123, null, 123.456);
+  // testUtil.testFunc(Math.round, 123, 123.456);
 }
 module.exports.test = test

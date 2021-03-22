@@ -5,16 +5,16 @@ const test = () => {
   console.log('strTest.test');
   testUtil.setShowAll(0);
 
-  testUtil.testFunc(nfa.isEmptyStr, true, null, "");
-  testUtil.testFunc(nfa.isEmptyStr, true, null, null);
-  testUtil.testFunc(nfa.isEmptyStr, true, null, undefined);
-  testUtil.testFunc(nfa.isEmptyStr, false, null, "1");
-  testUtil.testFunc(nfa.isEmptyStr, false, null, "0");
-  testUtil.testFunc(nfa.isNonEmptyStr, false, null, "");
-  testUtil.testFunc(nfa.isNonEmptyStr, false, null, null);
-  testUtil.testFunc(nfa.isNonEmptyStr, false, null, undefined);
-  testUtil.testFunc(nfa.isNonEmptyStr, true, null, "1");
-  testUtil.testFunc(nfa.isNonEmptyStr, true, null, "0");
+  testUtil.testFunc('isEmptyStr', nfa.isEmptyStr, true, "");
+  testUtil.testFunc('isEmptyStr', nfa.isEmptyStr, true, null);
+  testUtil.testFunc('isEmptyStr', nfa.isEmptyStr, true, undefined);
+  testUtil.testFunc('isEmptyStr', nfa.isEmptyStr, false, "1");
+  testUtil.testFunc('isEmptyStr', nfa.isEmptyStr, false, "0");
+  testUtil.testFunc('isNonEmptyStr', nfa.isNonEmptyStr, false, "");
+  testUtil.testFunc('isNonEmptyStr', nfa.isNonEmptyStr, false, null);
+  testUtil.testFunc('isNonEmptyStr', nfa.isNonEmptyStr, false, undefined);
+  testUtil.testFunc('isNonEmptyStr', nfa.isNonEmptyStr, true, "1");
+  testUtil.testFunc('isNonEmptyStr', nfa.isNonEmptyStr, true, "0");
 
   let str1 = 'Aa Bb C Ddd Eee';
   let str2 = 'aa bb c ddd eee';
@@ -39,18 +39,18 @@ const test = () => {
   // $arr['studly'] = studly("fish-apple");
   // $arr['to_title'] = to_title("fish-apple");
 
-  // testUtil.testFunc(nfa.strCamelize, 'aaBbCcDdEe', null, str1);
-  // testUtil.testFunc(nfa.strUnderscore, 'aa_bb_cc_dd_ee', null, str1);
-  // testUtil.testFunc(nfa.strCamelize, 'aaBbCcDdEe', null, str2);
-  // testUtil.testFunc(nfa.strUnderscore, 'aa_bb_cc_dd_ee', null, str2);
-  // testUtil.testFunc(nfa.isEqual, false, null, moment('2021-09-01'), moment('2021-01-06'));
+  // testUtil.testFunc(nfa.strCamelize, 'aaBbCcDdEe', str1);
+  // testUtil.testFunc(nfa.strUnderscore, 'aa_bb_cc_dd_ee', str1);
+  // testUtil.testFunc(nfa.strCamelize, 'aaBbCcDdEe', str2);
+  // testUtil.testFunc(nfa.strUnderscore, 'aa_bb_cc_dd_ee', str2);
+  // testUtil.testFunc(nfa.isEqual, false, moment('2021-09-01'), moment('2021-01-06'));
 
   // console.log(`str=${str1}, nfa.lcfirst=${nfa.lcfirst(str1)}`);
   // console.log(`str=${str1}, nfa.lcfirst` + str1.charAt(0));
 
   const execFunc = (strFuncs, expVals, sInput)=>{
     strFuncs.map((func, i)=>{
-      testUtil.testFunc(func, expVals[i], null, sInput);
+      testUtil.testFunc(func.name, func, expVals[i], sInput);
     });
     // console.log(`str=${str}, nfa.strSnake=${nfa.strSnake(str)}`);
     // console.log(`str=${str}, nfa.strDash=${nfa.strDash(str)}`);

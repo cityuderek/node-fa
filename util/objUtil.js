@@ -120,18 +120,43 @@ const ovEquals = (obj, expectedVal, ...keys) => {
 };
 module.exports.ovEquals = ovEquals;
 
+const ovExists = (obj, ...keys) => {
+  return gov(obj, undefined, ...keys) !== undefined;
+};
+module.exports.ovExists = ovExists;
+
 const objLen = (obj) =>{
   return Object.keys(obj).length;
 }
 module.exports.objLen = objLen;
 
+const showObj = (obj, title = 'obj', isShowObj = true) =>{
+  let ty = getType(obj);
+  let arr = [];
+  let str = "";
+  if(ty === 'string'){
+    str = `${title}; dataType=string(${obj.length})`;
 
+  }else if(ty === 'array'){
+    str = `${title}; dataType=array(${obj.length})`;
+
+  }else{
+    str = `${title}; dataType=${ty}`;
+  }
+  arr.push(str);
+  
+  if(isShowObj) arr.push(obj);
+
+  console.log(...arr);
+}
+module.exports.showObj = showObj
 
 //// dataType ////////////////////////////////////////////////////////////////////
 const getType = (obj) =>{
   let t = typeof obj;
   if(t === 'object'){
     if(obj instanceof Date) return 'Date';
+    if(Array.isArray(obj)) return 'array';
 
   }else if(t === 'number'){
     if(Number.isInteger(obj)) return 'integer';

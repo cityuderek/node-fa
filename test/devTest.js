@@ -13,7 +13,7 @@ const { strTest } = require('../test')
 const testUtil = new (require('../util/TestUtil'))(false);
 // console.log('dtUtil1', dtUtil)
 
-strTest.test()
+// strTest.test()
 // nfa.test();
 // mathUtil.test();
 // fileUtil.test()

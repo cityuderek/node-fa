@@ -19,20 +19,20 @@ class TestUtil {
   //// util
   setShowAll = b=>this.isShowAll = b;
 
-  testFunc = (func, expVal, paramName = null, ...params) => {
+  testFunc = (caseName, func, expVal, ...params) => {
     let rs = func(...params);
-    return this.handleRs(func.name, expVal, rs, paramName, ...params);
+    return this.handleRs(caseName, expVal, rs, ...params);
   }
 
-  handleRs = (funcName, expVal, actVal, paramName = null, ...params) => {
-    const showRs = (msg, paramName, params)=>{
-      if(paramName === null){
-        console.log(msg, params);
+  handleRs = (caseName, expVal, actVal, ...params) => {
+    // const showRs = (msg, paramName, params)=>{
+    //   if(paramName === null){
+    //     console.log(msg, params);
 
-      }else{
-        console.log(msg + paramName);
-      }
-    }
+    //   }else{
+    //     console.log(msg + paramName);
+    //   }
+    // }
 
     let isExp = objUtil.isEqual(actVal, expVal);
     let expValLen = objUtil.length(expVal);
@@ -41,12 +41,12 @@ class TestUtil {
     //   const moment = require('moment');
     //   console.log('~', moment(actVal).isSame(expVal));
     // }
-    let msg = (isExp ? 'OK  ': 'FAIL') + ", func=" + funcName + 
+    let msg = (isExp ? 'OK  ': 'FAIL') + ", case=" + caseName + 
     ", expVal(" + objUtil.getType(expVal) + (expValLen ? ', ' + expValLen : '') + ")=" + expVal + 
-    ", actVal(" + objUtil.getType(actVal) + (actValLen ? ', ' + actValLen : '') + ")=" + actVal + 
-    ", params=";
+    ", actVal(" + objUtil.getType(actVal) + (actValLen ? ', ' + actValLen : '') + ")=" + actVal;
     if(this.isShowAll || !isExp){
-      showRs(msg, paramName, params);
+      console.log(msg);
+      // showRs(msg, paramName, params);
     }
     this.addRs(isExp)
     return isExp;

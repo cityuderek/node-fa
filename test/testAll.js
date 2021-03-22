@@ -1,6 +1,6 @@
 const { nfa } = require('../util');
 const test = require('../test');
-const testUtil = new (require('../util/TestUtil'))(false);
+// const testUtil = new (require('../util/TestUtil'))(false);
 
 // console.log('dtUtil1', dtUtil);
 // console.log('util=', util);
@@ -11,10 +11,14 @@ const testUtil = new (require('../util/TestUtil'))(false);
 const main = async ()=>{
   console.clear();
   console.log('testAll ' + nfa.nowDtmStr());
+  let testModules = getTestModules();
+
+  // testModules = ['objTest'];
+  console.log(`testModules=`, testModules);
 
   const isShowAll = 0;
-  testUtil.setShowAll(isShowAll);
-  for(const key of Object.keys(test)){
+  // testUtil.setShowAll(isShowAll);
+  for(const key of testModules){
       let testMod = test[key];
       if(typeof testMod.test == 'function'){
           console.log(`\ntestMod=${key}`);
@@ -22,8 +26,18 @@ const main = async ()=>{
       }
   }
 }
-main();
 
+const getTestModules = ()=>{
+  let mods = [];
+  for(const key of Object.keys(test)){
+      let testMod = test[key];
+      if(typeof testMod.test == 'function'){
+        mods.push(key);
+      }
+  }
+  return mods;
+}
 // nfa.test();
 // mathUtil.test();
 // testUtil.test();
+main();

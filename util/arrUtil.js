@@ -7,6 +7,13 @@ const last = (arr, defVal = null) =>{
 }
 module.exports.last = last;
 
+//// check /////////////////////////////////////////////////////////////////////
+const isEmptyArr = obj=>!isNonEmptyArr(obj);
+module.exports.isEmptyArr = isEmptyArr;
+
+const isNonEmptyArr = obj=>Array.isArray(obj) && obj.length > 0;
+module.exports.isNonEmptyArr = isNonEmptyArr;
+
 //// array /////////////////////////////////////////////////////////////////////
 const fixArrLen = (arr, targetLen, fillValue) =>{
   if(arr.length > targetLen){

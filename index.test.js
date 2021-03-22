@@ -8,8 +8,8 @@
 // });
 // const dtUtil = require('./helpers/dtUtil');
 // const strUtil = require('./helpers/strUtil');
-const nfa = require('./');
-const { dtUtil, strUtil } = require('./util');
+const { nfa } = require('./util');
+const moment = require('moment');
 // console.log('dtUtil1', dtUtil);
 
 // test('adds 1 + 2 to equal 3', () => {
@@ -20,19 +20,27 @@ const { dtUtil, strUtil } = require('./util');
 //   console.log('dtUtil2', dtUtil);
 // });
 
-test('nfa', () => {
-  nfa.test();
-});
+// test('nfa', () => {
+//   nfa.test();
+// });
 
 test('toLocaleString', () => {
-  dtUtil.toLocaleString(new Date(), "DefVal");
+  nfa.toLocaleString(new Date(), "DefVal");
+  expect(1).toBe(1);
+});
+
+test('getMm', () => {
+  // console.log(`getMm`, nfa.getMm('2021-01-06'));
+  // console.log(`moment`, moment(1609844400000));
+  expect(moment(1609844400000).isSame(nfa.getMm('2021-01-06'))).toBe(true);
 });
 
 test('camelize', () => {
   let str = "ABc Def (ghi)";
   console.log("str=" + str);
-  console.log("camelize=" + strUtil.camelize(str));
-  console.log("underscore=" + strUtil.underscore(str));
-  console.log("rmSpecialChars=" + strUtil.rmSpecialChars(str));
-  console.log("rmSpace=" + strUtil.rmSpace(str));
+  expect(str).toBe(str);
+  // console.log("strCamel=" + nfa.strCamel(str));
+  // console.log("strUnderscore=" + nfa.strUnderscore(str));
+  // console.log("rmSpecialChars=" + nfa.rmSpecialChars(str));
+  // console.log("rmSpace=" + nfa.rmSpace(str));
 });
