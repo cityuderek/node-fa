@@ -1,36 +1,54 @@
 
-let isShowAll = true;
-const setShowAll = b=>isShowAll = b
-module.exports.setShowAll = setShowAll
+// let isShowAll = true;
+// const setShowAll = b=>isShowAll = b
+// module.exports.setShowAll = setShowAll
 
-const testFunc = (func, expVal, ...params) => {
-  let rs = func(...params);
-  let isExp = rs === expVal;
-  let msg = func.name + ", expVal=" + expVal + ", rs=" + rs + ", isExp=" + isExp + ", params=";
-  if(isShowAll){
-    console.log(msg, params);
+// const testFunc = (func, expVal, ...params) => {
+//   let rs = func(...params);
+//   let isExp = rs === expVal;
+//   let msg = func.name + ", expVal=" + expVal + ", rs=" + rs + ", isExp=" + isExp + ", params=";
+//   if(isShowAll){
+//     console.log(msg, params);
 
-  }else if(!isExp){
-    console.log(msg, params);
-  }
-}
-module.exports.testFunc = testFunc
+//   }else if(!isExp){
+//     console.log(msg, params);
+//   }
+// }
+// module.exports.testFunc = testFunc;
 
-//// NaN //////////////////////////////////////////////////////////////////////
-const isExactNaN = (obj)=>obj !== obj;
-module.exports.isExactNaN = isExactNaN
 
 //// number ///////////////////////////////////////////////////////////////////
+const isExactNaN = (obj)=>obj !== obj;
+module.exports.isExactNaN = isExactNaN;
+
+const isNumeric = (n)=> {
+  const ty = typeof(n);
+  if(n === null || ty === 'boolean' || n === '' || Array.isArray(n)) return false; 
+  return !isNaN(n) && !isNaN(parseFloat(n));
+}
+module.exports.isNumeric = isNumeric;
+
+const add = (num1, num2, defVal = null)=>{
+  const isNum1 = isNumeric(num1);
+  const isNum2 = isNumeric(num2);
+  if(!isNum1 && !isNum2) return defVal;
+  return (isNum1 ? num1 : 0) + (isNum2 ? num2 : 0);
+}
+module.exports.add = add;
+
 const round = (num, n = 0)=>{
   const base = Math.pow(10, n);
   const rounded = Math.round(num * base) / base;
 
   return rounded;
 }
-module.exports.round = round
+module.exports.round = round;
 
 const gt0 = (num)=>parseFloat(num) > 0;
-module.exports.gt0 = gt0
+module.exports.gt0 = gt0;
+
+const eg0 = (num)=>parseFloat(num) >= 0;
+module.exports.eg0 = eg0;
 
 //// integer ///////////////////////////////////////////////////////////////////
 const parseInt = (param1)=>{

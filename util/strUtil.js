@@ -1,13 +1,5 @@
 const arrUtil = require('./arrUtil');
-/*
-eg
 
-    let str = "abcdecf";
-    let key = 'c';
-    let i = 3;
-    console.log(`patterns`, nfa.cutStrBefore(str, key, i));
-
-*/
 //// count /////////////////////////////////////////////////////////////////////
 const countOccurrence = (str, regex)=>{
   return (str.match(regex) || []).length;
@@ -34,9 +26,19 @@ const cutStrBefore = (str, key, n = 1) =>{
   }
   return str;
   // console.log(`str2`, str.replace(/.*\n/, ""));
-
 }
 exports.cutStrBefore = cutStrBefore;
+
+//// concat ////////////////////////////////////////////////////////////////////
+const concat = (str1, str2, seperator = ', ') =>{
+  const isNonEmptyStr1 = isNonEmptyStr(str1, false);
+  const isNonEmptyStr2 = isNonEmptyStr(str2, false);
+  if(!isNonEmptyStr1 && !isNonEmptyStr2) return "";
+  if(!isNonEmptyStr1) return str2;
+  if(!isNonEmptyStr2) return str1;
+  return str1 + seperator + str2;
+}
+exports.concat = concat;
 
 //// string ////////////////////////////////////////////////////////////////////
 const split = (str, seperator, targetLen) =>{
@@ -45,13 +47,21 @@ const split = (str, seperator, targetLen) =>{
 }
 exports.split = split;
 
-const isEmptyStr = (str)=>{
-  return !isNonEmptyStr(str);
+const isStr = (str)=>str !== null && str !== undefined && str !== NaN;
+exports.isStr = isStr;
+
+const isEmptyStr = (str, matchType = true)=>{
+  return !isNonEmptyStr(str, matchType);
 };
 exports.isEmptyStr = isEmptyStr;
 
-const isNonEmptyStr = (str)=>{
-  return typeof str === 'string' && str.length > 0;
+const isNonEmptyStr = (str, matchType = true)=>{
+  if(matchType){
+    return typeof str === 'string' && str.length > 0;
+  }
+
+  if(str === null || str === undefined || str === NaN) return false;
+  return (str + '').length > 0;
 };
 exports.isNonEmptyStr = isNonEmptyStr;
 
@@ -91,7 +101,7 @@ exports.lcfirst = lcfirst;
 const strCamel = (data)=>{
   if(Array.isArray(data)){
     let arr = [];
-    data.map(str=>{
+    data.forEach(str=>{
       arr.push(strCamel(str));
     })
     return arr;
