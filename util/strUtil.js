@@ -47,7 +47,7 @@ const split = (str, seperator, targetLen) =>{
 }
 exports.split = split;
 
-const isStr = (str)=>str !== null && str !== undefined && str !== NaN;
+const isStr = (str)=>str !== null && str !== undefined && str !== str;    // str !== str check NaN
 exports.isStr = isStr;
 
 const isEmptyStr = (str, matchType = true)=>{
@@ -60,7 +60,7 @@ const isNonEmptyStr = (str, matchType = true)=>{
     return typeof str === 'string' && str.length > 0;
   }
 
-  if(str === null || str === undefined || str === NaN) return false;
+  if(str === null || str === undefined || str !== str) return false;
   return (str + '').length > 0;
 };
 exports.isNonEmptyStr = isNonEmptyStr;

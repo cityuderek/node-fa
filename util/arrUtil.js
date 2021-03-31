@@ -1,11 +1,39 @@
 const objUtil = require('./objUtil')
 
-//// get /////////////////////////////////////////////////////////////////////
+//// get 1 /////////////////////////////////////////////////////////////////////
+const first = (arr, defVal = null) =>{
+  if(!Array.isArray(arr) || arr.length === 0) return defVal;
+  return arr[0];
+}
+module.exports.first = first;
+
 const last = (arr, defVal = null) =>{
   if(!Array.isArray(arr) || arr.length === 0) return defVal;
   return arr[arr.length - 1];
 }
 module.exports.last = last;
+
+const arrGetN = (arr, i, defVal = null) =>{
+  if(!Array.isArray(arr) || arr.length <= i) return defVal;
+  return arr[i];
+}
+module.exports.arrGetN = arrGetN;
+
+//// get N /////////////////////////////////////////////////////////////////////
+const firstN = (arr, n) =>{
+  return arr.slice(0, n);
+}
+module.exports.firstN = firstN;
+
+const lastN = (arr, n) =>{
+  return arr.splice(arr.length - n);
+}
+module.exports.lastN = lastN;
+
+const skipFirstN = (arr, n) =>{
+  return arr.slice(n);
+}
+module.exports.skipFirstN = skipFirstN;
 
 //// check /////////////////////////////////////////////////////////////////////
 const isEmptyArr = obj=>!isNonEmptyArr(obj);
