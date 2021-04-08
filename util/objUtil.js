@@ -176,10 +176,43 @@ const showObj = (obj, title = 'obj', isShowObj = true) =>{
 
   console.log(...arr);
 }
-module.exports.showObj = showObj
+module.exports.showObj = showObj;
+
+const objSmry = (obj, title = 'obj') =>{
+  let ty = getType(obj);
+  let str = "";
+  if(ty === 'string'){
+    str = `${title}; dataType=string, str(${obj.length})=${obj.substring(0, 20)}`;
+
+  }else if(ty === 'array'){
+    str = `${title}; dataType=array, len=${obj.length}`;
+
+  }else if(ty === 'number'){
+    str = `${title}; dataType=number, val=${obj}`;
+
+  }else if(ty === 'integer'){
+    str = `${title}; dataType=integer, val=${obj}`;
+
+  }else if(ty === 'object'){
+    str = `${title}; dataType=object, keys=${Object.keys(obj).length}`;
+
+  }else if(ty === 'boolean'){
+    str = `${title}; dataType=boolean, val=${obj}`;
+
+  }else if(ty === 'Date'){
+    str = `${title}; dataType=Date, val=${moment(obj).format("YYYY-MM-DD hh:mm:ss")}`;
+
+  }else{
+    str = `${title}; dataType=${ty}`;
+  }
+  return str;
+}
+module.exports.objSmry = objSmry;
 
 //// dataType ////////////////////////////////////////////////////////////////////
 const getType = (obj) =>{
+  if(obj === null) return 'null';
+  if(obj !== obj) return 'NaN';
   let t = typeof obj;
   if(t === 'object'){
     if(obj instanceof Date) return 'Date';

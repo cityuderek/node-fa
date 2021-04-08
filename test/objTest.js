@@ -139,11 +139,32 @@ const test = () => {
   testUtil.testFunc('ovExists 2', nfa.ovExists, true, obj3, 'obj2');
   testUtil.testFunc('ovExists 3', nfa.ovExists, true, obj3, 'obj2', 'v2');
   
-  let rs = nfa.getType('fish');
-  testUtil.handleRs('getType', `string`, rs, 'fish');
   testUtil.testFunc("getType", nfa.getType, `string`, '111');
   testUtil.testFunc("getType", nfa.getType, `integer`, 222);
+  testUtil.testFunc("getType", nfa.getType, `number`, 9.1);
+  testUtil.testFunc("getType", nfa.getType, `null`, null);
+  testUtil.testFunc("getType", nfa.getType, `undefined`, undefined);
+  testUtil.testFunc("getType", nfa.getType, `NaN`, NaN);
+  testUtil.testFunc("getType", nfa.getType, `boolean`, true);
+  testUtil.testFunc("getType", nfa.getType, `boolean`, false);
+  testUtil.testFunc("getType", nfa.getType, `object`, {});
+  testUtil.testFunc("getType", nfa.getType, `array`, []);
+  testUtil.testFunc("getType", nfa.getType, `Date`, new Date());
   
+  testUtil.testFunc("objSmry", nfa.objSmry, `strVal; dataType=string, str(4)=fish`, 'fish', 'strVal');
+  testUtil.testFunc("objSmry", nfa.objSmry, `intVal; dataType=integer, val=106`, 106, 'intVal');
+  testUtil.testFunc("objSmry", nfa.objSmry, `floatVal; dataType=number, val=9.1`, 9.1, 'floatVal');
+  testUtil.testFunc("objSmry", nfa.objSmry, `nullVal; dataType=null`, null, 'nullVal');
+  testUtil.testFunc("objSmry", nfa.objSmry, `undefinedVal; dataType=undefined`, undefined, 'undefinedVal');
+  testUtil.testFunc("objSmry", nfa.objSmry, `NaNVal; dataType=NaN`, NaN, 'NaNVal');
+  testUtil.testFunc("objSmry", nfa.objSmry, `T; dataType=boolean, val=true`, true, 'T');
+  testUtil.testFunc("objSmry", nfa.objSmry, `F; dataType=boolean, val=false`, false, 'F');
+  testUtil.testFunc("objSmry", nfa.objSmry, `objVal; dataType=object, keys=0`, {}, 'objVal');
+  testUtil.testFunc("objSmry", nfa.objSmry, `arrVal; dataType=array, len=0`, [], 'arrVal');
+  testUtil.testFunc("objSmry", nfa.objSmry, `dateVal; dataType=Date, val=2021-02-06 12:00:00`, new Date(2021, 1, 6), 'dateVal');
+
+  // console.log('objSmry=', nfa.objSmry('fish', 'strVal'));
+
   testUtil.testFunc("isEqual", nfa.isEqual, true, moment('2021-01-06'), moment('2021-01-06'));
   testUtil.testFunc("isEqual", nfa.isEqual, false, moment('2021-09-01'), moment('2021-01-06'));
   testUtil.testFunc("isNullGroup", nfa.isNullGroup, false, 'abc');
