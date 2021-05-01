@@ -1,12 +1,45 @@
 const arrUtil = require('./arrUtil');
 
+//// handle empty /////////////////////////////////////////////////////////////////////
+const ifStrEmpty = (obj, defVal = "", prepend = "", append = "")=>{
+  if(obj === null) return defVal;
+  if(typeof(obj) === 'undefined') return defVal;
+  if(obj === "") return defVal;
+  return prepend + obj + append;
+};
+exports.ifStrEmpty = ifStrEmpty;
+
+const isStr = (str)=>str !== null && str !== undefined && str !== str;    // str !== str check NaN
+exports.isStr = isStr;
+
+const isEmptyStr = (str, matchType = true)=>{
+  return !isNonEmptyStr(str, matchType);
+};
+exports.isEmptyStr = isEmptyStr;
+
+const isNonEmptyStr = (str, matchType = true)=>{
+  if(matchType){
+    return typeof str === 'string' && str.length > 0;
+  }
+
+  if(str === null || str === undefined || str !== str) return false;
+  return (str + '').length > 0;
+};
+exports.isNonEmptyStr = isNonEmptyStr;
+
 //// count /////////////////////////////////////////////////////////////////////
 const countOccurrence = (str, regex)=>{
   return (str.match(regex) || []).length;
 }
 exports.countOccurrence = countOccurrence;
 
-//// cut /////////////////////////////////////////////////////////////////////
+//// split /////////////////////////////////////////////////////////////////////
+const split = (str, seperator, targetLen) =>{
+  let strs = str.split(seperator);
+  return arrUtil.fixArrLen(strs, targetLen, '');
+}
+exports.split = split;
+
 const cutStrBefore = (str, key, n = 1) =>{
   // console.log('str', str);
   // const regex = new RegExp("(.*" + key + "){" + n + "}(.+)");
@@ -40,47 +73,7 @@ const concat = (str1, str2, seperator = ', ') =>{
 }
 exports.concat = concat;
 
-//// string ////////////////////////////////////////////////////////////////////
-const split = (str, seperator, targetLen) =>{
-  let strs = str.split(seperator);
-  return arrUtil.fixArrLen(strs, targetLen, '');
-}
-exports.split = split;
-
-const isStr = (str)=>str !== null && str !== undefined && str !== str;    // str !== str check NaN
-exports.isStr = isStr;
-
-const isEmptyStr = (str, matchType = true)=>{
-  return !isNonEmptyStr(str, matchType);
-};
-exports.isEmptyStr = isEmptyStr;
-
-const isNonEmptyStr = (str, matchType = true)=>{
-  if(matchType){
-    return typeof str === 'string' && str.length > 0;
-  }
-
-  if(str === null || str === undefined || str !== str) return false;
-  return (str + '').length > 0;
-};
-exports.isNonEmptyStr = isNonEmptyStr;
-
-const showStr = (str, title = 'str')=>{
-  if(str === null){
-    console.log(`${title} is null`);
-
-  }else{
-    let len = str.length;
-    console.log(`${title}(${len})="${str}"`);
-  }
-};
-exports.showStr = showStr;
-
-const rmLineNDblSpace = (str)=>{
-  return str.replace(/[\t\r\n]/g, ' ').replace(/ +/g, ' ').trim();
-};
-exports.rmLineNDblSpace = rmLineNDblSpace;
-
+//// format ////////////////////////////////////////////////////////////////////
 const ucwords = (data)=>{
   data = data.toLowerCase();
   return data.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
@@ -148,6 +141,7 @@ const strToTitle = (data)=>{
 };
 exports.strToTitle = strToTitle;
 
+//// Special character ////////////////////////////////////////////////////////////////////
 const rmSpecialChars = (str, replacement = '')=>{
   return str.replace(/[^a-zA-Z0-9_]/g, replacement)
 }
@@ -157,3 +151,31 @@ const rmSpace = (str, replacement = '')=>{
   return str.replace(/ /g, replacement)
 }
 exports.rmSpace = rmSpace;
+
+//// Line operation ////////////////////////////////////////////////////////////////////
+const rmLineNDblSpace = (str)=>{
+  return str.replace(/[\t\r\n]/g, ' ').replace(/ +/g, ' ').trim();
+};
+exports.rmLineNDblSpace = rmLineNDblSpace;
+
+//// String information ////////////////////////////////////////////////////////////////////
+const showStr = (str, title = 'str')=>{
+  if(str === null){
+    console.log(`${title} is null`);
+
+  }else{
+    let len = str.length;
+    console.log(`${title}(${len})="${str}"`);
+  }
+};
+exports.showStr = showStr;
+
+const strLen = (str)=>{
+  if(typeof(str) === 'string') return str.length;
+  return 0;
+};
+exports.strLen = strLen;
+
+
+
+//// other ////////////////////////////////////////////////////////////////////

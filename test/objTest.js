@@ -139,17 +139,17 @@ const test = () => {
   testUtil.testFunc('ovExists 2', nfa.ovExists, true, obj3, 'obj2');
   testUtil.testFunc('ovExists 3', nfa.ovExists, true, obj3, 'obj2', 'v2');
   
-  testUtil.testFunc("getType", nfa.getType, `string`, '111');
-  testUtil.testFunc("getType", nfa.getType, `integer`, 222);
-  testUtil.testFunc("getType", nfa.getType, `number`, 9.1);
-  testUtil.testFunc("getType", nfa.getType, `null`, null);
-  testUtil.testFunc("getType", nfa.getType, `undefined`, undefined);
-  testUtil.testFunc("getType", nfa.getType, `NaN`, NaN);
-  testUtil.testFunc("getType", nfa.getType, `boolean`, true);
-  testUtil.testFunc("getType", nfa.getType, `boolean`, false);
-  testUtil.testFunc("getType", nfa.getType, `object`, {});
-  testUtil.testFunc("getType", nfa.getType, `array`, []);
-  testUtil.testFunc("getType", nfa.getType, `Date`, new Date());
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `string`, '111');
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `integer`, 222);
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `number`, 9.1);
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `null`, null);
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `undefined`, undefined);
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `NaN`, NaN);
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `boolean`, true);
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `boolean`, false);
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `object`, {});
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `array`, []);
+  testUtil.testFunc("getDetailType", nfa.getDetailType, `Date`, new Date());
   
   testUtil.testFunc("objSmry", nfa.objSmry, `strVal; dataType=string, str(4)=fish`, 'fish', 'strVal');
   testUtil.testFunc("objSmry", nfa.objSmry, `intVal; dataType=integer, val=106`, 106, 'intVal');
@@ -196,17 +196,17 @@ const test = () => {
   testUtil.testFunc('gov6', nfa.gov, 'defVal', obj1, 'defVal', undefined);
 
 
+  testUtil.testFunc('ifEmpty 1', nfa.ifEmpty, 106, 106, 'defVal');
+  testUtil.testFunc('ifEmpty 2', nfa.ifEmpty, 0, 0, 'defVal');
+  testUtil.testFunc('ifEmpty 3', nfa.ifEmpty, false, false, 'defVal');
+  testUtil.testFunc('ifEmpty 4', nfa.ifEmpty, 'defVal', null, 'defVal');
+  testUtil.testFunc('ifEmpty 5', nfa.ifEmpty, 'defVal', NaN, 'defVal');
+
   testUtil.testFunc('ifNull 1', nfa.ifNull, 106, 106, 'defVal');
   testUtil.testFunc('ifNull 2', nfa.ifNull, 0, 0, 'defVal');
   testUtil.testFunc('ifNull 3', nfa.ifNull, false, false, 'defVal');
   testUtil.testFunc('ifNull 4', nfa.ifNull, 'defVal', null, 'defVal');
-  testUtil.testFunc('ifNull 5', nfa.ifNull, 'defVal', NaN, 'defVal');
-
-  testUtil.testFunc('ifExactNull 1', nfa.ifExactNull, 106, 106, 'defVal');
-  testUtil.testFunc('ifExactNull 2', nfa.ifExactNull, 0, 0, 'defVal');
-  testUtil.testFunc('ifExactNull 3', nfa.ifExactNull, false, false, 'defVal');
-  testUtil.testFunc('ifExactNull 4', nfa.ifExactNull, 'defVal', null, 'defVal');
-  testUtil.testFunc('ifExactNull 5', nfa.ifExactNull, NaN, NaN, 'defVal');
+  testUtil.testFunc('ifNull 5', nfa.ifNull, NaN, NaN, 'defVal');
 
   testUtil.testFunc('isOvNotEmptyStr 1', nfa.isOvNotEmptyStr, false, obj1, 'name0');
   testUtil.testFunc('isOvNotEmptyStr 2', nfa.isOvNotEmptyStr, true, obj1, 'name1');
@@ -240,6 +240,25 @@ const test = () => {
   testUtil.testFunc('isNonEmpty 10', nfa.isNonEmpty, true, "true");
   testUtil.testFunc('isNonEmpty 11', nfa.isNonEmpty, true, false);
   testUtil.testFunc('isNonEmpty 12', nfa.isNonEmpty, true, true);
+
+  testUtil.testFunc('isDetailTypeOf 1', nfa.isDetailTypeOf, true, null, ['null']);
+  testUtil.testFunc('isDetailTypeOf 2', nfa.isDetailTypeOf, true, NaN, ['NaN']);
+  testUtil.testFunc('isDetailTypeOf 3', nfa.isDetailTypeOf, true, undefined, ['undefined']);
+  testUtil.testFunc('isDetailTypeOf 3', nfa.isDetailTypeOf, true, '', ['string']);
+  testUtil.testFunc('isDetailTypeOf 3', nfa.isDetailTypeOf, true, 'fish', ['string']);
+  testUtil.testFunc('isDetailTypeOf 3', nfa.isDetailTypeOf, true, [], ['array']);
+  testUtil.testFunc('isDetailTypeOf 3', nfa.isDetailTypeOf, true, {}, ['object']);
+
+  testUtil.testFunc('isDetailTypeOf 4', nfa.isDetailTypeOf, false, 0, ['null', 'NaN', 'undefined']);
+  testUtil.testFunc('isDetailTypeOf 5 ', nfa.isDetailTypeOf, false, 1, ['null', 'NaN', 'undefined']);
+  testUtil.testFunc('isDetailTypeOf 6', nfa.isDetailTypeOf, false, false, ['null', 'NaN', 'undefined']);
+  testUtil.testFunc('isDetailTypeOf 7', nfa.isDetailTypeOf, false, true, ['null', 'NaN', 'undefined']);
+  testUtil.testFunc('isDetailTypeOf 7', nfa.isDetailTypeOf, false, {}, ['null', 'NaN', 'undefined']);
+  
+  testUtil.testFunc('objSize 1', nfa.objSize, 0, null);
+  testUtil.testFunc('objSize 2', nfa.objSize, 2, {});
+  testUtil.testFunc('objSize 3', nfa.objSize, 2, []);
+  testUtil.testFunc('objSize 4', nfa.objSize, 26, ['null', 'NaN', 'undefined']);
 
   testUtil.showAllRs();
 }

@@ -42,8 +42,8 @@ class TestUtil {
     //   console.log('~', moment(actVal).isSame(expVal));
     // }
     let msg = (isExp ? 'OK  ': 'FAIL') + ", case=" + caseName + 
-    ", expVal(" + objUtil.getType(expVal) + (expValLen ? ', ' + expValLen : '') + ")=" + expVal + 
-    ", actVal(" + objUtil.getType(actVal) + (actValLen ? ', ' + actValLen : '') + ")=" + actVal;
+    ", expVal(" + objUtil.getDetailType(expVal) + (expValLen ? ', ' + expValLen : '') + ")=" + expVal + 
+    ", actVal(" + objUtil.getDetailType(actVal) + (actValLen ? ', ' + actValLen : '') + ")=" + actVal;
     if(this.isShowAll || !isExp){
       console.log(msg);
       // showRs(msg, paramName, params);

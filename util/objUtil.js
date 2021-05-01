@@ -3,11 +3,11 @@ const moment = require('moment');
 // const nfa = require('./nfa')
 
 // console.log('load objUtil');
-const ifNull = (obj, defVal) => obj === null || isNaN(obj) ? defVal : obj;
-module.exports.ifNull = ifNull
+const ifEmpty = (obj, defVal = null) => obj === null || isNaN(obj) || typeof(obj) === 'undefined'? defVal : obj;
+module.exports.ifEmpty = ifEmpty
 
-const ifExactNull = (obj, defVal) => obj === null ? defVal : obj;
-module.exports.ifExactNull = ifExactNull
+const ifNull = (obj, defVal) => obj === null ? defVal : obj;
+module.exports.ifNull = ifNull
 
 //// object ////////////////////////////////////////////////////////////////////
 //// get object value, not allow false
@@ -158,7 +158,7 @@ const objLen = (obj) =>{
 module.exports.objLen = objLen;
 
 const showObj = (obj, title = 'obj', isShowObj = true) =>{
-  let ty = getType(obj);
+  let ty = getDetailType(obj);
   let arr = [];
   let str = "";
   if(ty === 'string'){
@@ -179,7 +179,7 @@ const showObj = (obj, title = 'obj', isShowObj = true) =>{
 module.exports.showObj = showObj;
 
 const objSmry = (obj, title = 'obj') =>{
-  let ty = getType(obj);
+  let ty = getDetailType(obj);
   let str = "";
   if(ty === 'string'){
     str = `${title}; dataType=string, str(${obj.length})=${obj.substring(0, 20)}`;
@@ -210,21 +210,40 @@ const objSmry = (obj, title = 'obj') =>{
 module.exports.objSmry = objSmry;
 
 //// dataType ////////////////////////////////////////////////////////////////////
-const getType = (obj) =>{
+// const getDetailType = (obj) =>{
+//   if(obj === null) return 'null';
+//   if(obj !== obj) return 'NaN';
+//   let t = typeof obj;
+//   if(t === 'object'){
+//     if(obj instanceof Date) return 'Date';
+//     if(Array.isArray(obj)) return 'array';
+
+//   }else if(t === 'number'){
+//     if(Number.isInteger(obj)) return 'integer';
+//   }
+  
+//   return t;
+// }
+// module.exports.getDetailType = getDetailType
+
+const isDetailTypeOf = (obj, arr) =>arr.includes(getDetailType(obj));
+module.exports.isDetailTypeOf = isDetailTypeOf
+
+const getDetailType = (obj) =>{
   if(obj === null) return 'null';
   if(obj !== obj) return 'NaN';
-  let t = typeof obj;
-  if(t === 'object'){
+  const ty = typeof obj;
+  if(ty === 'object'){
     if(obj instanceof Date) return 'Date';
     if(Array.isArray(obj)) return 'array';
 
-  }else if(t === 'number'){
+  }else if(ty === 'number'){
     if(Number.isInteger(obj)) return 'integer';
   }
   
-  return t;
+  return ty;
 }
-module.exports.getType = getType
+module.exports.getDetailType = getDetailType
 
 const length = (obj) =>{
   if(typeof obj === 'string') return obj.length;
@@ -234,7 +253,10 @@ const length = (obj) =>{
 }
 module.exports.length = length
 
-const isDt = (obj)=>{
-  return obj instanceof Date
+
+//// Object information ////////////////////////////////////////////////////////////////////
+const objSize = (obj)=>{
+  if(obj === null) return 0;
+  return JSON.stringify(obj).length;
 }
-module.exports.isDt = isDt
+module.exports.objSize = objSize

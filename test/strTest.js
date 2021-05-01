@@ -16,6 +16,13 @@ const test = () => {
   testUtil.testFunc('isNonEmptyStr', nfa.isNonEmptyStr, true, "1");
   testUtil.testFunc('isNonEmptyStr', nfa.isNonEmptyStr, true, "0");
 
+  testUtil.testFunc('strLen1', nfa.strLen, 0, null);
+  testUtil.testFunc('strLen2', nfa.strLen, 0, NaN);
+  testUtil.testFunc('strLen3', nfa.strLen, 0, {});
+  testUtil.testFunc('strLen4', nfa.strLen, 0, true);
+  testUtil.testFunc('strLen5', nfa.strLen, 1, "0");
+  testUtil.testFunc('strLen6', nfa.strLen, 4, "fish");
+
   let str1 = 'Aa Bb C Ddd Eee';
   let str2 = 'aa bb c ddd eee';
   let str3 = 'aa-bb-c-ddd-eee';
