@@ -5,7 +5,7 @@
     "url": "https://derek-lam.com"
   },
   "name": "node-fa",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Node JS library",
   "main": "index.js",
   "repository": {
@@ -28,6 +28,9 @@
   "dependencies": {
     "axios": "^0.21.1",
     "csv-parse": "^4.15.3",
+    "glob": "^7.1.6",
+    "jquery": "^3.6.0",
+    "jsdom": "^16.5.3",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "moment": "^2.29.1"

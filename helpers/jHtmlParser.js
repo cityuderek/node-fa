@@ -29,6 +29,14 @@ const firstJ = (ele, selector)=>{
 };
 exports.firstJ = firstJ;
 
+const exists = (ele, selector)=>{
+  const $ = getJquery();
+  let eles = ele.find(selector);
+  // console.log(`eles(${selector})=${eles.length}`);
+  return eles.length > 0;
+};
+exports.exists = exists;
+
 const first = (ele, selector)=>{
   let eles = ele.find(selector);
   // console.log(`eles(${selector})=${eles.length}`);
