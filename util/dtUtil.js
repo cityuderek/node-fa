@@ -1,64 +1,91 @@
 const moment = require('moment')
 
-//// String ////////////////////////////////////////////////////////////////////
+//// Format ////////////////////////////////////////////////////////////////////
 const nowDtmStr = ()=>{
   return moment().format("YYYY-MM-DD hh:mm:ss");
 }
-module.exports.nowDtmStr = nowDtmStr;
+exports.nowDtmStr = nowDtmStr;
 
 const nowDtmUnderscoreStr = ()=>{
   return moment().format("YYYY_MM_DD_hh_mm_ss");
 }
-module.exports.nowDtmUnderscoreStr = nowDtmUnderscoreStr;
+exports.nowDtmUnderscoreStr = nowDtmUnderscoreStr;
 
 const nowDtmNumberStr = ()=>{
   return moment().format("YYYYMMDDhhmmss");
 }
-module.exports.nowDtmNumberStr = nowDtmNumberStr;
+exports.nowDtmNumberStr = nowDtmNumberStr;
 
 const nowDtNTmNumberStr = ()=>{
   return moment().format("YYYYMMDD_hhmmss");
 }
-module.exports.nowDtNTmNumberStr = nowDtNTmNumberStr;
+exports.nowDtNTmNumberStr = nowDtNTmNumberStr;
 
 const nowDtStr = ()=>{
   return moment().format("YYYY-MM-DD");
 }
-module.exports.nowDtStr = nowDtStr;
+exports.nowDtStr = nowDtStr;
 
 const nowDtUnderscoreStr = ()=>{
   return moment().format("YYYY_MM_DD");
 }
-module.exports.nowDtUnderscoreStr = nowDtUnderscoreStr;
+exports.nowDtUnderscoreStr = nowDtUnderscoreStr;
 
 const nowDtNumberStr = ()=>{
   return moment().format("YYYYMMDD");
 }
-module.exports.nowDtNumberStr = nowDtNumberStr;
+exports.nowDtNumberStr = nowDtNumberStr;
 
 const nowTmStr = ()=>{
   return moment().format("hh:mm:ss");
 }
-module.exports.nowTmStr = nowTmStr;
+exports.nowTmStr = nowTmStr;
 
 const nowTmUnderscoreStr = ()=>{
   return moment().format("hh_mm_ss");
 }
-module.exports.nowTmUnderscoreStr = nowTmUnderscoreStr;
+exports.nowTmUnderscoreStr = nowTmUnderscoreStr;
 
 const nowTmNumberStr = ()=>{
   return moment().format("hhmmss");
 }
-module.exports.nowTmNumberStr = nowTmNumberStr;
+exports.nowTmNumberStr = nowTmNumberStr;
+
+const formatDtm = (dtm = null, format = "YYYY-MM-DD hh:mm:ss")=>{
+  if(!dtm){
+    dtm = moment();
+  }
+  let mm = toMoment(dtm);
+  return mm.format(format);
+}
+exports.formatDtm = formatDtm;
+
+const formatDt = (dt = null, format = "YYYY-MM-DD")=>{
+  if(!dt){
+    dt = moment();
+  }
+  let mm = toMoment(dt);
+  return mm.format(format);
+}
+exports.formatDt = formatDt;
 
 //// Moment ////////////////////////////////////////////////////////////////////
 const isMoment = moment.isMoment;
-module.exports.isMoment = isMoment;
+exports.isMoment = isMoment;
+
+const toMoment = (dtm, format = null)=>{
+  if(moment.isMoment(dtm)){
+    return dtm;
+  }
+
+  return format ? moment(dtm, format): moment(dtm);
+}
+exports.toMoment = toMoment;
 
 const durationNow = (mm)=>{
   return moment.duration(moment(new Date()).diff(mm));
 }
-module.exports.durationNow = durationNow;
+exports.durationNow = durationNow;
 
 const getMm = (dt = null, addYr = 0, addMo = 0, addDay = 0)=> {
     let mm;
@@ -80,13 +107,13 @@ const getMm = (dt = null, addYr = 0, addMo = 0, addDay = 0)=> {
 
     return mm;
 }
-module.exports.getMm = getMm;
+exports.getMm = getMm;
 
 const parseMm = (sDt, format = "YYYY-MM-DD")=>{
   let mm = moment(sDt, format);
   return mm;
 }
-module.exports.parseMm = parseMm;
+exports.parseMm = parseMm;
 
 const toDtStr = (dt, format = "YYYY-MM-DD")=>{
   let mm = null;
@@ -98,19 +125,19 @@ const toDtStr = (dt, format = "YYYY-MM-DD")=>{
   }
   return mm.format("YYYY-MM-DD");
 }
-module.exports.toDtStr = toDtStr;
+exports.toDtStr = toDtStr;
 
 //// Date //////////////////////////////////////////////////////////////////////
 const geJts = ()=> Date.now()
-module.exports.geJts = geJts;
+exports.geJts = geJts;
 
 const geUts = ()=> parseInt(Date.now() / 1000)
-module.exports.geUts = geUts;
+exports.geUts = geUts;
 
 const isDt = (obj)=>{
   return obj instanceof Date
 }
-module.exports.isDt = isDt;
+exports.isDt = isDt;
 
 const toLocaleString = (dt, defVal = "")=>{
   if(!dt) return defVal;
@@ -122,4 +149,11 @@ const toLocaleString = (dt, defVal = "")=>{
 
   return defVal;
 }
-module.exports.toLocaleString = toLocaleString;
+exports.toLocaleString = toLocaleString;
+
+//// Date //////////////////////////////////////////////////////////////////////
+
+const getTimestamp = ()=>{
+  return new Date().getTime();
+}
+exports.getTimestamp = getTimestamp;

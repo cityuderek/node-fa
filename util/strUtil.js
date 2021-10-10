@@ -27,6 +27,12 @@ const isNonEmptyStr = (str, matchType = true)=>{
 };
 exports.isNonEmptyStr = isNonEmptyStr;
 
+//// check /////////////////////////////////////////////////////////////////////
+const containsStr = (str, needle)=>{
+  return str.includes(needle);
+}
+exports.containsStr = containsStr;
+
 //// count /////////////////////////////////////////////////////////////////////
 const countOccurrence = (str, regex)=>{
   return (str.match(regex) || []).length;
@@ -157,6 +163,21 @@ const rmLineNDblSpace = (str)=>{
   return str.replace(/[\t\r\n]/g, ' ').replace(/ +/g, ' ').trim();
 };
 exports.rmLineNDblSpace = rmLineNDblSpace;
+
+//// show ////////////////////////////////////////////////////////////////////
+const showStrArr = (strs, title = "strArr", hasIdx = true)=>{
+  let sTmp = [];
+  sTmp.push(`${title}(${strs.length})`);
+  strs.forEach((str, idx)=>{
+    if(hasIdx){
+      sTmp.push(`${idx}: ${str}`);
+    }else{
+      sTmp.push(str);
+    }
+  });
+  console.log(sTmp.join("\n"));
+};
+exports.showStrArr = showStrArr;
 
 //// String information ////////////////////////////////////////////////////////////////////
 const showStr = (str, title = 'str')=>{

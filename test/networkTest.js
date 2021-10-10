@@ -23,7 +23,8 @@ const test = async() => {
   testUtil.handleRs('networkUtil.getCtt', false, nfa.isNonEmptyStr(json.ip), url1);
 
   //// networkCacheHelper
-  networkCacheHelper.setFolder('/Users/derek/Dropbox/projProperty/NetworkCacheHelper2');
+  // networkCacheHelper.setFolder('/Users/derek/Dropbox/projProperty/NetworkCacheHelper2');
+  networkCacheHelper.setFolder('D:\\Dropbox\\projProperty\\NetworkCacheHelper2');
   json = await networkCacheHelper.getCtt(url1);
   // console.log('json', json);
   testUtil.handleRs('networkCacheHelper.getCtt', true, nfa.isNonEmptyObj(json), url1);

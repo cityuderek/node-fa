@@ -1,6 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const glob = require("glob");
 const jsonUtil = require('./jsonUtil');
+const dtUtil = require('./dtUtil');
 const objUtil = require('./objUtil');
 const strUtil = require('./strUtil');
 const arrUtil = require('./arrUtil');
@@ -25,15 +27,15 @@ const readJsonSync = (filepath, encoding = 'utf8', defVal = null)=>{
 }
 exports.readJsonSync = readJsonSync;
 
-const readAllLines = (filepath, options)=>{
+const readAllLinesSync = (filepath, options)=>{
     let ctt = fs.readFileSync(filepath, 'utf8');
     let lines = arrayOfLines = ctt.match(/[^\r\n]+/g);
 
     return lines;
 }
-exports.readAllLines = readAllLines;
+exports.readAllLinesSync = readAllLinesSync;
 
-const readCsv = (filepath, options)=>{
+const readCsSync = (filepath, options)=>{
     const parse = require('csv-parse/lib/sync')
     let cnt = objUtil.gov(options, 0, 'cnt');
     let skip = objUtil.gov(options, 0, 'skip');
@@ -53,14 +55,11 @@ const readCsv = (filepath, options)=>{
     }
     return records;
 }
-exports.readCsv = readCsv;
+exports.readCsSync = readCsSync;
 
-const readTsv = (filepath, options = {})=>{
+const readTsvSync = (filepath, options = {})=>{
   let {isObj = true, maxCnt = 0, skip = 0} = options;
-  let lines = readAllLines(filepath);
-  // let isObj = nfa.ovEquals(options, true, 'isObj');
-  // let cnt = nfa.gov(options, 0, 'cnt');
-  // let skip = nfa.gov(options, 0, 'skip');
+  let lines = readAllLinesSync(filepath);
   // console.log(`filepath=${filepath}, lines=${lines.length}, isObj=${isObj}, maxCnt=${maxCnt}, skip=${skip}, options=`, options);
 
   // console.log('lines=', lines);
@@ -92,7 +91,7 @@ const readTsv = (filepath, options = {})=>{
   }
   return arr;
 }
-exports.readTsv = readTsv
+exports.readTsvSync = readTsvSync
 
 
 //// write file ////////////////////////////////////////////////////////////////
@@ -116,6 +115,35 @@ const existsSync = (path)=>{
 }
 exports.existsSync = existsSync;
 
+const getFileStat = function(filepath) {
+  let fileInfo = fs.statSync(filepath);
+
+  if(filepath){
+     fileInfo.exists = fs.existsSync(filepath);
+     fileInfo.created_at = dtUtil.formatDtm(fileInfo.ctime);
+     fileInfo.modified_at = dtUtil.formatDtm(fileInfo.mtime);
+  }
+
+  return fileInfo;
+}
+exports.getFileStat = getFileStat;
+
+const showFileInfo = function(filepath, title = "file") {
+  let fileInfo = getFileStat(filepath);
+  console.log(`${title}; path=${filepath} fileInfo=` + jsonUtil.stringifyJson(fileInfo));
+}
+exports.showFileInfo = showFileInfo;
+
+const showFileSmry = function(filepath, title = "file") {
+  let fileInfo = getFileStat(filepath);
+  let smry = `${title}; path=${filepath}, exists=${fileInfo.exists}, size=${fileInfo.size}, created_at=${fileInfo.created_at}, updated_at=${fileInfo.updated_at}`;
+  console.log(smry);
+}
+exports.showFileSmry = showFileSmry;
+
+//// path ////////////////////////////////////////////////////////////////
+exports.joinPath = path.join;
+
 //// dir ////////////////////////////////////////////////////////////////
 const mkdirSync = (dir)=>{
   if (!fs.existsSync(dir)){
@@ -125,8 +153,27 @@ const mkdirSync = (dir)=>{
 exports.mkdirSync = mkdirSync;
 
 const listFiles = async (dirPath)=>{
-  // glob('*.js', {}, (err, results) => console.log(results))
+  if (!dirPath.includes("*")){
+    dirPath = path.join(p, "**");
+  }
   let rs = await globAsync(dirPath);
   return rs;
 }
 exports.listFiles = listFiles;
+
+const listFilesSync = (dirPath)=>{
+  if (!dirPath.includes("*")){
+    dirPath = path.join(p, "**");
+  }
+  let rs = glob.sync(dirPath);
+  return rs;
+}
+exports.listFilesSync = listFilesSync;
+
+const searchFileSync = (dirPath, filename)=>{
+  let pattern = path.join(dirPath, "**", filename);
+  let paths = glob.sync(pattern);
+
+  return arrUtil.arrFirst(paths);
+}
+exports.searchFileSync = searchFileSync;

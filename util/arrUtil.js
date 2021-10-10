@@ -1,17 +1,17 @@
 const objUtil = require('./objUtil')
 
 //// get 1 /////////////////////////////////////////////////////////////////////
-const first = (arr, defVal = null) =>{
+const arrFirst = (arr, defVal = null) =>{
   if(!Array.isArray(arr) || arr.length === 0) return defVal;
   return arr[0];
 }
-module.exports.first = first;
+module.exports.arrFirst = arrFirst;
 
-const last = (arr, defVal = null) =>{
+const arrLast = (arr, defVal = null) =>{
   if(!Array.isArray(arr) || arr.length === 0) return defVal;
   return arr[arr.length - 1];
 }
-module.exports.last = last;
+module.exports.arrLast = arrLast;
 
 const arrGetN = (arr, i, defVal = null) =>{
   if(!Array.isArray(arr) || arr.length <= i) return defVal;
@@ -20,20 +20,20 @@ const arrGetN = (arr, i, defVal = null) =>{
 module.exports.arrGetN = arrGetN;
 
 //// get N /////////////////////////////////////////////////////////////////////
-const firstN = (arr, n) =>{
+const arrFirstN = (arr, n) =>{
   return arr.slice(0, n);
 }
-module.exports.firstN = firstN;
+module.exports.arrFirstN = arrFirstN;
 
-const lastN = (arr, n) =>{
+const arrLastN = (arr, n) =>{
   return arr.splice(arr.length - n);
 }
-module.exports.lastN = lastN;
+module.exports.arrLastN = arrLastN;
 
-const skipFirstN = (arr, n) =>{
+const arrSkipFirstN = (arr, n) =>{
   return arr.slice(n);
 }
-module.exports.skipFirstN = skipFirstN;
+module.exports.arrSkipFirstN = arrSkipFirstN;
 
 //// check /////////////////////////////////////////////////////////////////////
 const isEmptyArr = obj=>!isNonEmptyArr(obj);
@@ -96,14 +96,13 @@ const indexOfVal = (arr, key, value) => {
 module.exports.indexOfVal = indexOfVal;
 
 //// show //////////////////////////////////////////////////////////////////////
-const show = (arr, title = "")=>{
-  console.log('Array(' + title + ')=', arr.length);
-  arr.forEach(item=>{
-      console.log('item=', item);
-  })
-}
-module.exports.show = show
-
+// const show = (arr, title = "")=>{
+//   console.log('Array(' + title + ')=', arr.length);
+//   arr.forEach(item=>{
+//       console.log('item=', item);
+//   })
+// }
+// module.exports.show = show
 
 const showArr = (arr, title = undefined, options = {}) => {
   const { cond } = options;
@@ -126,4 +125,3 @@ const showArr = (arr, title = undefined, options = {}) => {
   }
 };
 module.exports.showArr = showArr
-// module.exports = { kVArrToObj }

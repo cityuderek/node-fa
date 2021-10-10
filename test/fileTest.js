@@ -19,6 +19,11 @@ const test = () => {
 ]
 `, ctt, path1);
 
+// console.log("path.join=", nfa.joinPath("C:\\fff", "www"));
+// console.log("path.join=", nfa.joinPath("C:\\fff\\", "www"));
+// console.log("path.join=", nfa.joinPath("C:\\fff", "\\www"));
+// console.log("path.join=", nfa.joinPath("C:\\fff\\", "\\www"));
+// console.log("path.join=", nfa.joinPath("C:\\fff\\", "/www"));
 
   let json =  fileUtil.readJsonSync(path1);
   // console.log('json', json);

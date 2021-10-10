@@ -7,3 +7,8 @@ const parseJson = (str, defVal = null) => {
   return defVal;
 };
 module.exports.parseJson = parseJson
+
+const stringifyJson = (json, nSpace = 2) => {
+  return JSON.stringify(json, null, nSpace);
+};
+module.exports.stringifyJson = stringifyJson

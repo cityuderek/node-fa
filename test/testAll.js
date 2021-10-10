@@ -1,4 +1,4 @@
-const { nfa } = require('../util');
+const { nfa, fileUtil } = require('../util');
 const test = require('../test');
 // const testUtil = new (require('../util/TestUtil'))(false);
 
