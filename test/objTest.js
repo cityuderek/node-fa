@@ -1,5 +1,5 @@
 const moment = require('moment');
-const { nfa } = require('../util');
+const nfa = require('../util/nfa');;
 const testUtil = new (require('../util/TestUtil'))(false);
 
 const test = () => {
@@ -134,10 +134,10 @@ const test = () => {
     }
   }
 
-  // console.log(nfa.ovExists(obj3, 'v1'));
-  testUtil.testFunc('ovExists 1', nfa.ovExists, true, obj3, 'v1');
-  testUtil.testFunc('ovExists 2', nfa.ovExists, true, obj3, 'obj2');
-  testUtil.testFunc('ovExists 3', nfa.ovExists, true, obj3, 'obj2', 'v2');
+  // console.log(nfa.objValExists(obj3, 'v1'));
+  testUtil.testFunc('objValExists 1', nfa.objValExists, true, obj3, 'v1');
+  testUtil.testFunc('objValExists 2', nfa.objValExists, true, obj3, 'obj2');
+  testUtil.testFunc('objValExists 3', nfa.objValExists, true, obj3, 'obj2', 'v2');
   
   testUtil.testFunc("getDetailType", nfa.getDetailType, `string`, '111');
   testUtil.testFunc("getDetailType", nfa.getDetailType, `integer`, 222);
@@ -259,6 +259,14 @@ const test = () => {
   testUtil.testFunc('objSize 2', nfa.objSize, 2, {});
   testUtil.testFunc('objSize 3', nfa.objSize, 2, []);
   testUtil.testFunc('objSize 4', nfa.objSize, 26, ['null', 'NaN', 'undefined']);
+
+  nfa.varDump(1.0, 'float');
+  nfa.varDump(1, 'int');
+  nfa.varDump(true, 'true');
+  nfa.varDump([], 'array_empty');
+  nfa.varDump(null, 'null');
+  nfa.varDump("asda\\s!aa'da", 'pat\"ter\nn');
+  nfa.varDump(new Date(), 'dt');
 
   testUtil.showAllRs();
 }

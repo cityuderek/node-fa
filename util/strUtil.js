@@ -158,6 +158,11 @@ const rmSpace = (str, replacement = '')=>{
 }
 exports.rmSpace = rmSpace;
 
+const newLine = ()=>{
+  return process.platform === "win32" ? "\r\n" : "\n";
+}
+exports.newLine = newLine;
+
 //// Line operation ////////////////////////////////////////////////////////////////////
 const rmLineNDblSpace = (str)=>{
   return str.replace(/[\t\r\n]/g, ' ').replace(/ +/g, ' ').trim();
@@ -165,9 +170,10 @@ const rmLineNDblSpace = (str)=>{
 exports.rmLineNDblSpace = rmLineNDblSpace;
 
 //// show ////////////////////////////////////////////////////////////////////
-const showStrArr = (strs, title = "strArr", hasIdx = true)=>{
+const showStrArr = (strs, title = "strArr", options = {})=>{
+  let { hasIdx = false, hasLen = true } = options;
   let sTmp = [];
-  sTmp.push(`${title}(${strs.length})`);
+  sTmp.push(`${title}` + (hasLen ? `(len=${strs.length})` : ""));
   strs.forEach((str, idx)=>{
     if(hasIdx){
       sTmp.push(`${idx}: ${str}`);
@@ -175,7 +181,9 @@ const showStrArr = (strs, title = "strArr", hasIdx = true)=>{
       sTmp.push(str);
     }
   });
-  console.log(sTmp.join("\n"));
+  let msg = sTmp.join(newLine());
+  console.log(msg);
+  return msg;
 };
 exports.showStrArr = showStrArr;
 
@@ -197,6 +205,12 @@ const strLen = (str)=>{
 };
 exports.strLen = strLen;
 
-
+//// Regex /////////////////////////////////////////////////////////////////////
+const strWildcardStr2RegexStr = (str)=>{
+  str = str.replaceAll('.', "\\.");
+  str = str.replaceAll('*', '.*');
+  return `^${str}$`;
+};
+exports.strWildcardStr2RegexStr = strWildcardStr2RegexStr;
 
 //// other ////////////////////////////////////////////////////////////////////

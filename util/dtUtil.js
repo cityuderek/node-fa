@@ -115,17 +115,18 @@ const parseMm = (sDt, format = "YYYY-MM-DD")=>{
 }
 exports.parseMm = parseMm;
 
-const toDtStr = (dt, format = "YYYY-MM-DD")=>{
-  let mm = null;
-  if(dt instanceof Date){
-    mm = moment(dt);
+// const toDtStr = (dt, format = "YYYY-MM-DD")=>{
+//   let mm = null;
+//   if(dt instanceof Date){
+//     mm = moment(dt);
 
-  }else{
-    mm = dt;
-  }
-  return mm.format("YYYY-MM-DD");
-}
-exports.toDtStr = toDtStr;
+//   }else{
+//     mm = dt;
+//   }
+//   return mm.format("YYYY-MM-DD");
+// }
+// exports.toDtStr = formatDt;
+// exports.toDtmStr = formatDtm;
 
 //// Date //////////////////////////////////////////////////////////////////////
 const geJts = ()=> Date.now()

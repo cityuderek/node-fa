@@ -7,12 +7,13 @@ const objUtil = require('./objUtil');
 const strUtil = require('./strUtil');
 const arrUtil = require('./arrUtil');
 const nodeUtil = require('./nodeUtil');
+const devUtil = require('./devUtil');
 
 const globAsync = nodeUtil.promisify(glob);
 
 //// read file ////////////////////////////////////////////////////////////////
 const readFileSync = (filepath, encoding = 'utf8', defVal = "")=>{
-  if(existsSync(filepath)){
+  if(fileExistsSync(filepath)){
     return fs.readFileSync(filepath, 'utf8');
   }
   return defVal;
@@ -20,7 +21,7 @@ const readFileSync = (filepath, encoding = 'utf8', defVal = "")=>{
 exports.readFileSync = readFileSync;
 
 const readJsonSync = (filepath, encoding = 'utf8', defVal = null)=>{
-  if(existsSync(filepath)){
+  if(fileExistsSync(filepath)){
     return jsonUtil.parseJson(fs.readFileSync(filepath, 'utf8'), defVal);
   }
   return defVal;
@@ -109,24 +110,43 @@ const writeJsonSync = (path, json)=>{
 };
 exports.writeJsonSync = writeJsonSync;
 
-//// file ////////////////////////////////////////////////////////////////
-const existsSync = (path)=>{
+//// file info ////////////////////////////////////////////////////////////////
+const fileExistsSync = (path)=>{
   return fs.existsSync(path);
 }
-exports.existsSync = existsSync;
+exports.fileExistsSync = fileExistsSync;
 
 const getFileStat = function(filepath) {
-  let fileInfo = fs.statSync(filepath);
+  let fileStat = {};
+  if(fs.existsSync(filepath)){
+    fileStat = fs.statSync(filepath);
+    fileStat.exists = fs.existsSync(filepath);
+    fileStat.created_at = dtUtil.formatDtm(fileStat.ctime);
+    fileStat.modified_at = dtUtil.formatDtm(fileStat.mtime);
 
-  if(filepath){
-     fileInfo.exists = fs.existsSync(filepath);
-     fileInfo.created_at = dtUtil.formatDtm(fileInfo.ctime);
-     fileInfo.modified_at = dtUtil.formatDtm(fileInfo.mtime);
+  }else{
+    fileStat.path = filepath;
+    fileStat.exists = false;
+    fileStat.size = 0;
+    fileStat.ctime = 0;
+    fileStat.mtime = 0;
+    fileStat.ctimeMs = 0;
+    fileStat.mtimeMs = 0;
+    
+    fileStat.created_at = "";
+    fileStat.modified_at = "";
   }
 
-  return fileInfo;
+  return fileStat;
 }
 exports.getFileStat = getFileStat;
+
+const fileSize = function(filepath) {
+  let fileStat = getFileStat(filepath);
+
+  return fileStat.size;
+}
+exports.fileSize = fileSize;
 
 const showFileInfo = function(filepath, title = "file") {
   let fileInfo = getFileStat(filepath);
@@ -152,6 +172,66 @@ const mkdirSync = (dir)=>{
 }
 exports.mkdirSync = mkdirSync;
 
+
+const readDirSync = (dirPath, options)=>{
+  // console.log(`dirPath=${dirPath}`, options);
+  let { isRecursive = false, ignore = [], pattern, patternRegex, isDirOnly = false, isFileOnly = false, limit = 0} = options;
+  let allFiles = fs.readdirSync(dirPath, {withFileTypes: true});
+  let paths = [];
+  let incFile = !isDirOnly;
+  let incDir = !isFileOnly;
+  let regex = null;
+  let bCont = true;
+  if(pattern && !patternRegex){
+    patternRegex = nfa.strWildcardStr2RegexStr(pattern);
+  }
+  if(patternRegex){
+    // console.log(`patternRegex=${patternRegex}`);
+    regex = new RegExp(patternRegex, 'i');
+  }
+
+  allFiles.map(file=>{
+    let name = file.name;
+    if(!ignore || !arrUtil.arrContains(ignore, name)){
+      let fullpath = path.join(dirPath, name);
+      let isDirectory = file.isDirectory();
+      if(isDirectory){
+        if(incDir){
+          if(!regex || regex.test(name)){
+            paths.push(fullpath);
+            if(limit > 0 && paths.length >= limit){
+              bCont = false;
+            }
+          }
+        }
+        if(isRecursive){
+          let paths2 = readDirSync(fullpath, options);
+          paths = paths.concat(paths2);
+          if(limit > 0 && paths.length >= limit){
+            bCont = false;
+          }
+        }
+      }else{
+        if(incFile){
+          if(!regex || regex.test(name)){
+            paths.push(fullpath);
+            if(limit > 0 && paths.length >= limit){
+              bCont = false;
+            }
+          }
+        }
+      }
+    }
+  })
+
+  if(limit > 0 && paths.length > limit){
+    paths = arrUtil.arrFirstN(paths, limit);
+  }
+
+  return paths;
+}
+exports.readDirSync = readDirSync;
+
 const listFiles = async (dirPath)=>{
   if (!dirPath.includes("*")){
     dirPath = path.join(p, "**");
@@ -170,10 +250,40 @@ const listFilesSync = (dirPath)=>{
 }
 exports.listFilesSync = listFilesSync;
 
-const searchFileSync = (dirPath, filename)=>{
-  let pattern = path.join(dirPath, "**", filename);
-  let paths = glob.sync(pattern);
+const searchFilesSync = (dirPath, filename, exceptDirs = null)=>{
+  let pattern = path.join(dirPath, '**', filename);
 
+  let options = {
+    dot: true
+  }
+  if(arrUtil.isNonEmptyArr(exceptDirs)){
+    options.ignore = exceptDirs.map(dir=>`**/${dir}/**`);
+  }
+
+  devUtil.varDump(pattern, 'pattern');
+  devUtil.varDump(options, 'options');
+  try{
+    let paths = glob.sync(pattern, options);
+    return paths;
+  }catch(ex){
+  }
+  return [];
+}
+exports.searchFilesSync = searchFilesSync;
+
+const searchFileSync = (dirPath, options)=>{
+  // let paths = searchFilesSync(dirPath, filename, exceptDirs); //// slow
+  options.isFileOnly = true;
+  options.isRecursive = true;
+  options.limit = 1;
+  let paths = readDirSync(dirPath, options);
+  // console.log(`dirPath=${dirPath}, filename=${filename}, pattern=${pattern}, paths=${paths.length}`);
   return arrUtil.arrFirst(paths);
 }
 exports.searchFileSync = searchFileSync;
+
+const fileMd5Sync = (path)=>{
+  const md5File = require('md5-file')
+  return md5File.sync(path)
+}
+exports.fileMd5Sync = fileMd5Sync;

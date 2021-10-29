@@ -2,6 +2,60 @@ const _ = require('lodash');
 const moment = require('moment');
 // const nfa = require('./nfa')
 
+//// check ///////////////////////////////////////////////////////////
+const isFunc = typeof(obj) === 'function';
+module.exports.ifEmpty = isFunc;
+
+// module.exports.isEqual = _.isEqual;
+const isEqual = (obj1, obj2)=>{
+  let rs = _.isEqual(obj1, obj2);
+  if(rs) return true;
+  if(moment.isMoment(obj1)){
+    return obj1.isSame(obj2);
+  }
+
+  return false;
+}
+module.exports.isEqual = isEqual;
+
+const isNotEqual = (obj1, obj2)=>isEqual(obj1, obj2);
+module.exports.isNotEqual = isNotEqual;
+
+const isObj = obj=>typeof obj === 'object' && obj !== null;
+module.exports.isObj = isObj;
+
+const isNullGroup = obj=>obj === null || typeof obj === 'undefined' || (typeof obj === 'number' && isNaN(obj));
+module.exports.isNullGroup = isNullGroup;
+
+const isEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length === 0;
+module.exports.isEmptyObj = isEmptyObj;
+
+const isNonEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length > 0;
+module.exports.isNonEmptyObj = isNonEmptyObj;
+
+const isEmpty = obj=>{
+  if(obj === null) return true;
+  if(obj === '') return true;
+  if(obj !== obj) return true;  // NaN
+  if(Array.isArray(obj) && obj.length === 0) return true;
+  const ty = typeof(obj);
+  if(ty === 'undefined') return true;
+  if(ty === 'object' && Object.keys(obj).length === 0) return true;
+  
+  return false;
+}
+module.exports.isEmpty = isEmpty;
+
+const isNonEmpty = obj=>!isEmpty(obj);
+module.exports.isNonEmpty = isNonEmpty;
+
+const isOvNotEmptyStr = (obj, ...keys) => {
+  const val = gov(obj, "", ...keys);
+  return typeof(val) === 'string' && val !== '';
+};
+module.exports.isOvNotEmptyStr = isOvNotEmptyStr;
+
+//// handle special value ///////////////////////////////////////////////////////////
 // console.log('load objUtil');
 const ifEmpty = (obj, defVal = null) => obj === null || isNaN(obj) || typeof(obj) === 'undefined'? defVal : obj;
 module.exports.ifEmpty = ifEmpty
@@ -69,6 +123,12 @@ const govo = (obj, defVal, ...keys) => {
 };
 module.exports.govo = govo
 
+const objSize = (obj)=>{
+  if(obj === null) return 0;
+  return JSON.stringify(obj).length;
+}
+module.exports.objSize = objSize
+
 //// get object value, object value base
 const hasKey = (obj, ...keys) => {
   if (!obj) return false;
@@ -86,71 +146,22 @@ const hasKey = (obj, ...keys) => {
 };
 module.exports.hasKey = hasKey;
 
-module.exports.isEqual = _.isEqual;
-const isEqual = (obj1, obj2)=>{
-  let rs = _.isEqual(obj1, obj2);
-  if(rs) return true;
-  if(moment.isMoment(obj1)){
-    return obj1.isSame(obj2);
-  }
-
-  return false;
-}
-module.exports.isEqual = isEqual;
-
-const isNotEqual = (obj1, obj2)=>isEqual(obj1, obj2);
-module.exports.isNotEqual = isNotEqual;
-
 const clone = obj=>JSON.parse(JSON.stringify(obj));
 module.exports.clone = clone;
 
-const isObj = obj=>typeof obj === 'object' && obj !== null;
-module.exports.isObj = isObj;
-
-const isNullGroup = obj=>obj === null || typeof obj === 'undefined' || (typeof obj === 'number' && isNaN(obj));
-module.exports.isNullGroup = isNullGroup;
-
-const isEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length === 0;
-module.exports.isEmptyObj = isEmptyObj;
-
-const isNonEmptyObj = obj=>typeof obj === 'object' && Object.keys(obj).length > 0;
-module.exports.isNonEmptyObj = isNonEmptyObj;
-
-const isEmpty = obj=>{
-  if(obj === null) return true;
-  if(obj === '') return true;
-  if(obj !== obj) return true;  // NaN
-  if(Array.isArray(obj) && obj.length === 0) return true;
-  const ty = typeof(obj);
-  if(ty === 'undefined') return true;
-  if(ty === 'object' && Object.keys(obj).length === 0) return true;
-  
-  return false;
-}
-module.exports.isEmpty = isEmpty;
-
-const isNonEmpty = obj=>!isEmpty(obj);
-module.exports.isNonEmpty = isNonEmpty;
-
-const isOvNotEmptyStr = (obj, ...keys) => {
-  const val = gov(obj, "", ...keys);
-  return typeof(val) === 'string' && val !== '';
-};
-module.exports.isOvNotEmptyStr = isOvNotEmptyStr;
-
-const ovEquals = (obj, expectedVal, ...keys) => {
+const objValEquals = (obj, expectedVal, ...keys) => {
   if(expectedVal === null){
     return gov(obj, true, ...keys) === null;
   }
 
   return gov(obj, null, ...keys) === expectedVal;
 };
-module.exports.ovEquals = ovEquals;
+module.exports.objValEquals = objValEquals;
 
-const ovExists = (obj, ...keys) => {
+const objValExists = (obj, ...keys) => {
   return gov(obj, undefined, ...keys) !== undefined;
 };
-module.exports.ovExists = ovExists;
+module.exports.objValExists = objValExists;
 
 const objLen = (obj) =>{
   return Object.keys(obj).length;
@@ -210,22 +221,6 @@ const objSmry = (obj, title = 'obj') =>{
 module.exports.objSmry = objSmry;
 
 //// dataType ////////////////////////////////////////////////////////////////////
-// const getDetailType = (obj) =>{
-//   if(obj === null) return 'null';
-//   if(obj !== obj) return 'NaN';
-//   let t = typeof obj;
-//   if(t === 'object'){
-//     if(obj instanceof Date) return 'Date';
-//     if(Array.isArray(obj)) return 'array';
-
-//   }else if(t === 'number'){
-//     if(Number.isInteger(obj)) return 'integer';
-//   }
-  
-//   return t;
-// }
-// module.exports.getDetailType = getDetailType
-
 const isDetailTypeOf = (obj, arr) =>arr.includes(getDetailType(obj));
 module.exports.isDetailTypeOf = isDetailTypeOf
 
@@ -252,11 +247,3 @@ const length = (obj) =>{
   return 0;
 }
 module.exports.length = length
-
-
-//// Object information ////////////////////////////////////////////////////////////////////
-const objSize = (obj)=>{
-  if(obj === null) return 0;
-  return JSON.stringify(obj).length;
-}
-module.exports.objSize = objSize

@@ -8,5 +8,6 @@ module.exports = {
   ...require('./mathUtil'),
   ...require('./nodeUtil'),
   ...require('./objUtil'),
-  ...require('./strUtil')
+  ...require('./strUtil'),
+  ...require('./sysUtil'),
 }

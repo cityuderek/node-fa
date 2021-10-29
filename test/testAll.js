@@ -1,4 +1,5 @@
-const { nfa, fileUtil } = require('../util');
+// const nfa = require('../util/nfa');;
+const nfa = require('../util/nfa');
 const test = require('../test');
 // const testUtil = new (require('../util/TestUtil'))(false);
 
@@ -10,6 +11,7 @@ const test = require('../test');
 
 const main = async ()=>{
   console.clear();
+  console.log('nfa ',  nfa);
   console.log('testAll ' + nfa.nowDtmStr());
   let testModules = getTestModules();
 
@@ -26,6 +28,7 @@ const main = async ()=>{
       }
   }
 }
+exports.main = main;
 
 const getTestModules = ()=>{
   let mods = [];
@@ -40,4 +43,4 @@ const getTestModules = ()=>{
 // nfa.test();
 // mathUtil.test();
 // testUtil.test();
-main();
+// main();

@@ -83,6 +83,17 @@ const newArr = (arraySize, val)=>{
 }
 module.exports.newArr = newArr
 
+//// filter //////////////////////////////////////////////////////////////////////
+const arrFilter = (arr, keys) => {
+  return arr.filter(ele=>keys.some(ele2 => ele2 === ele))
+}
+module.exports.arrFilter = arrFilter;
+
+const arrFilterNot = (arr, keys) => {
+  return arr.filter(ele=>!keys.some(ele2 => ele2 === ele))
+}
+module.exports.arrFilterNot = arrFilterNot;
+
 //// search //////////////////////////////////////////////////////////////////////
 const indexOfVal = (arr, key, value) => {
   let i = 0;
@@ -94,6 +105,57 @@ const indexOfVal = (arr, key, value) => {
   return -1;
 }
 module.exports.indexOfVal = indexOfVal;
+
+const arrContains = (arr, val) => {
+  return arr.some(ele => ele === val)
+}
+module.exports.arrContains = arrContains;
+
+const arrMaxEleIdx = (items, cb)=>{
+  let maxVal = 0;
+  let maxValIdx = 0;
+  if(!items || items.length == 0) {
+    return null;
+  }
+  items.forEach((item, i) => {
+    let val = cb(item);
+    if(val > maxVal){
+      maxVal = val;
+      maxValIdx = i;
+    }
+  });
+  return maxValIdx;
+}
+module.exports.arrMaxEleIdx = arrMaxEleIdx;
+
+const arrMaxEleVal = (items, cb)=>{
+  let maxValIdx = arrMaxEleIdx(items, cb);
+  return maxValIdx !== null ? cb(items[maxValIdx]) : null;
+}
+module.exports.arrMaxEleVal = arrMaxEleVal;
+
+const arrMinEleIdx = (items, cb)=>{
+  let minVal = 0;
+  let minValIdx = 0;
+  if(!items || items.length == 0) {
+    return null;
+  }
+  items.forEach((item, i) => {
+    let val = cb(item);
+    if(val < minVal){
+      minVal = val;
+      minValIdx = i;
+    }
+  });
+  return minValIdx;
+}
+module.exports.arrMinEleIdx = arrMinEleIdx;
+
+const arrMinEleVal = (items, cb)=>{
+  let minValIdx = arrMinEleIdx(items, cb);
+  return minValIdx !== null ? cb(items[minValIdx]) : null;
+}
+module.exports.arrMinEleVal = arrMinEleVal;
 
 //// show //////////////////////////////////////////////////////////////////////
 // const show = (arr, title = "")=>{

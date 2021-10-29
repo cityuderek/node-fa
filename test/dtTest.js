@@ -1,4 +1,4 @@
-// const { nfa } = require('../util')
+// const nfa = require('../util/nfa');
 // const moment = require('moment')
 // const testUtil = new (require('../util/TestUtil'))(false);
 
