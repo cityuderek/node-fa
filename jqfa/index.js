@@ -32,7 +32,7 @@ exports.getText = getText;
 
 const getEleCnt = (doc, selector) => {
   let eles = doc.find(selector);
-  console.log(`eles=${eles.length}`);
+  // console.log(`eles=${eles.length}`);
   return eles.length;
 };
 exports.getEleCnt = getEleCnt;

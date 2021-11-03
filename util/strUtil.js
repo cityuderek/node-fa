@@ -46,6 +46,11 @@ const split = (str, seperator, targetLen) =>{
 }
 exports.split = split;
 
+const splitLine = (str) =>{
+  return str.split(/\r?\n/);
+}
+exports.splitLine = splitLine;
+
 const cutStrBefore = (str, key, n = 1) =>{
   // console.log('str', str);
   // const regex = new RegExp("(.*" + key + "){" + n + "}(.+)");
