@@ -23,7 +23,7 @@ const escape = (str, options = {}) => {
   let {isSlash, isNewLine, isSingleQuote, isDoubleQuote, isSingleQuote2, isDoubleQuote2, isBackSlash, isTab} = options;
   
   if(isSlash){
-    str = str.replaceAll("\\", "\\");
+    str = str.replaceAll("\\", "\\\\");
   }
   if(isNewLine){
     str = str.replaceAll("\r\n", "\\r\\n");
@@ -51,6 +51,32 @@ const escape = (str, options = {}) => {
 exports.escape = escape;
 
 const unescape = (str, options = {}) => {
+  let {isSlash, isNewLine, isSingleQuote, isDoubleQuote, isSingleQuote2, isDoubleQuote2, isBackSlash, isTab} = options;
+  
+  if(isTab){
+    str = str.replaceAll("\\t", "\t");
+  }
+  if(isBackSlash){
+    str = str.replaceAll("\\/", "/");
+  }
+  if(isDoubleQuote){
+    str = str.replaceAll("\\\"", "\"");
+  }else if(isDoubleQuote2){
+    str = str.replaceAll("\"\"", "\"");
+  }
+  if(isSingleQuote){
+    str = str.replaceAll("\\'", "'");
+  }else if(isSingleQuote2){
+    str = str.replaceAll("''", "'");
+  }
+  if(isNewLine){
+    str = str.replaceAll("\\r\\n", "\r\n");
+    str = str.replaceAll("\\n", "\n");
+  }
+  if(isSlash){
+    str = str.replaceAll("\\\\", "\\");
+  }
+
   return str;
 };
 exports.unescape = unescape;

@@ -33,6 +33,21 @@ const containsStr = (str, needle)=>{
 }
 exports.containsStr = containsStr;
 
+function isAlphabet(str) {
+  return /^[a-zA-Z]+$/.test(str);
+}
+exports.isAlphabet = isAlphabet;
+
+function isNumberStr(str) {
+  return /^[0-9\.]+$/.test(str);
+}
+exports.isNumberStr = isNumberStr;
+
+function isDigitStr(str) {
+  return /^[0-9]+$/.test(str);
+}
+exports.isDigitStr = isDigitStr;
+
 //// count /////////////////////////////////////////////////////////////////////
 const countOccurrence = (str, regex)=>{
   return (str.match(regex) || []).length;
