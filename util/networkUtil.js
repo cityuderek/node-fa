@@ -1,7 +1,7 @@
 const axios = require('axios');
 // const networkCacheHelper = require('../helpers/networkCacheHelper');
 
-const getCtt = async (url, defVal = '')=>{
+const httpGet = async (url, defVal = '')=>{
   let resp = await axios.get(url).catch(()=>null)
   if(resp && resp.data){
     let ctt = resp.data;
@@ -10,7 +10,7 @@ const getCtt = async (url, defVal = '')=>{
   }
   return defVal;
 }
-module.exports.getCtt = getCtt;
+module.exports.httpGet = httpGet;
 
 const getJson = async (url, defVal = '')=>{
   let resp = await axios.get(url).catch(()=>null)

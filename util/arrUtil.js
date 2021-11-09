@@ -85,14 +85,30 @@ module.exports.newArr = newArr
 
 //// filter //////////////////////////////////////////////////////////////////////
 const arrFilter = (arr, keys) => {
+  if(!Array.isArray(keys)){
+    keys = [keys];
+  }
   return arr.filter(ele=>keys.some(ele2 => ele2 === ele))
 }
 module.exports.arrFilter = arrFilter;
 
 const arrFilterNot = (arr, keys) => {
+  if(!Array.isArray(keys)){
+    keys = [keys];
+  }
   return arr.filter(ele=>!keys.some(ele2 => ele2 === ele))
 }
 module.exports.arrFilterNot = arrFilterNot;
+
+const arrRemoveIf = (arr, key) => {
+  return arr.filter(ele=>ele !== key)
+}
+exports.arrRemoveIf = arrRemoveIf;
+
+const arrRemoveIfEmptyStr = (arr) => {
+  return arr.filter(ele=>ele !== "")
+}
+exports.arrRemoveIfEmptyStr = arrRemoveIfEmptyStr;
 
 //// search //////////////////////////////////////////////////////////////////////
 const indexOfVal = (arr, key, value) => {

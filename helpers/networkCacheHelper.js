@@ -17,16 +17,16 @@ const test = ()=>{
 exports.test = test;
 
 //// network function /////////////////////////////////////////////////////////
-const getCtt = async (url)=>{
+const httpGet = async (url)=>{
   let rs = readCtt(url);
   if(rs === null){
-    rs = await networkUtil.getCtt(url);
+    rs = await networkUtil.httpGet(url);
     if(rs !== null && rs !== ""){
       writeCtt(url, rs);
     }
 
   }else{
-    // console.log(`getCtt url=${url}, rs="${rs}"`);
+    // console.log(`httpGet url=${url}, rs="${rs}"`);
     let rsTmp = JSON.parse(rs);
     if(rsTmp !== null){
       rs = rsTmp;
@@ -34,7 +34,7 @@ const getCtt = async (url)=>{
   }
   return rs;
 }
-module.exports.getCtt = getCtt;
+module.exports.httpGet = httpGet;
 
 const getJson = async (url)=>{
   let rs = readCtt(url);

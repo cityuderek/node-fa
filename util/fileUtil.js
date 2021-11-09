@@ -176,56 +176,59 @@ exports.mkdirSync = mkdirSync;
 const readDirSync = (dirPath, options)=>{
   // console.log(`dirPath=${dirPath}`, options);
   let { isRecursive = false, ignore = [], pattern, patternRegex, isDirOnly = false, isFileOnly = false, limit = 0} = options;
-  let allFiles = fs.readdirSync(dirPath, {withFileTypes: true});
   let paths = [];
   let incFile = !isDirOnly;
   let incDir = !isFileOnly;
   let regex = null;
   let bCont = true;
-  if(pattern && !patternRegex){
-    patternRegex = nfa.strWildcardStr2RegexStr(pattern);
-  }
-  if(patternRegex){
-    // console.log(`patternRegex=${patternRegex}`);
-    regex = new RegExp(patternRegex, 'i');
-  }
+  try{
+    let allFiles = fs.readdirSync(dirPath, {withFileTypes: true});
+    if(pattern && !patternRegex){
+      patternRegex = nfa.strWildcardStr2RegexStr(pattern);
+    }
+    if(patternRegex){
+      // console.log(`patternRegex=${patternRegex}`);
+      regex = new RegExp(patternRegex, 'i');
+    }
 
-  allFiles.map(file=>{
-    let name = file.name;
-    if(!ignore || !arrUtil.arrContains(ignore, name)){
-      let fullpath = path.join(dirPath, name);
-      let isDirectory = file.isDirectory();
-      if(isDirectory){
-        if(incDir){
-          if(!regex || regex.test(name)){
-            paths.push(fullpath);
+    allFiles.map(file=>{
+      let name = file.name;
+      if(!ignore || !arrUtil.arrContains(ignore, name)){
+        let fullpath = path.join(dirPath, name);
+        let isDirectory = file.isDirectory();
+        if(isDirectory){
+          if(incDir){
+            if(!regex || regex.test(name)){
+              paths.push(fullpath);
+              if(limit > 0 && paths.length >= limit){
+                bCont = false;
+              }
+            }
+          }
+          if(isRecursive){
+            let paths2 = readDirSync(fullpath, options);
+            paths = paths.concat(paths2);
             if(limit > 0 && paths.length >= limit){
               bCont = false;
             }
           }
-        }
-        if(isRecursive){
-          let paths2 = readDirSync(fullpath, options);
-          paths = paths.concat(paths2);
-          if(limit > 0 && paths.length >= limit){
-            bCont = false;
-          }
-        }
-      }else{
-        if(incFile){
-          if(!regex || regex.test(name)){
-            paths.push(fullpath);
-            if(limit > 0 && paths.length >= limit){
-              bCont = false;
+        }else{
+          if(incFile){
+            if(!regex || regex.test(name)){
+              paths.push(fullpath);
+              if(limit > 0 && paths.length >= limit){
+                bCont = false;
+              }
             }
           }
         }
       }
-    }
-  })
+    })
 
-  if(limit > 0 && paths.length > limit){
-    paths = arrUtil.arrFirstN(paths, limit);
+    if(limit > 0 && paths.length > limit){
+      paths = arrUtil.arrFirstN(paths, limit);
+    }
+  }catch(ex){
   }
 
   return paths;
@@ -284,6 +287,9 @@ exports.searchFileSync = searchFileSync;
 
 const fileMd5Sync = (path)=>{
   const md5File = require('md5-file')
-  return md5File.sync(path)
+  try{
+    return md5File.sync(path);
+  }catch(ex){}
+  return null;
 }
 exports.fileMd5Sync = fileMd5Sync;

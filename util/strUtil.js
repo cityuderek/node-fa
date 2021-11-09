@@ -1,36 +1,36 @@
-const arrUtil = require('./arrUtil');
+const arrUtil = require("./arrUtil");
 
 //// handle empty /////////////////////////////////////////////////////////////////////
-const ifStrEmpty = (obj, defVal = "", prepend = "", append = "")=>{
-  if(obj === null) return defVal;
-  if(typeof(obj) === 'undefined') return defVal;
-  if(obj === "") return defVal;
+const ifStrEmpty = (obj, defVal = "", prepend = "", append = "") => {
+  if (obj === null) return defVal;
+  if (typeof obj === "undefined") return defVal;
+  if (obj === "") return defVal;
   return prepend + obj + append;
 };
 exports.ifStrEmpty = ifStrEmpty;
 
-const isStr = (str)=>str !== null && str !== undefined && str !== str;    // str !== str check NaN
+const isStr = (str) => str !== null && str !== undefined && str !== str; // str !== str check NaN
 exports.isStr = isStr;
 
-const isEmptyStr = (str, matchType = true)=>{
+const isEmptyStr = (str, matchType = true) => {
   return !isNonEmptyStr(str, matchType);
 };
 exports.isEmptyStr = isEmptyStr;
 
-const isNonEmptyStr = (str, matchType = true)=>{
-  if(matchType){
-    return typeof str === 'string' && str.length > 0;
+const isNonEmptyStr = (str, matchType = true) => {
+  if (matchType) {
+    return typeof str === "string" && str.length > 0;
   }
 
-  if(str === null || str === undefined || str !== str) return false;
-  return (str + '').length > 0;
+  if (str === null || str === undefined || str !== str) return false;
+  return (str + "").length > 0;
 };
 exports.isNonEmptyStr = isNonEmptyStr;
 
 //// check /////////////////////////////////////////////////////////////////////
-const containsStr = (str, needle)=>{
+const containsStr = (str, needle) => {
   return str.includes(needle);
-}
+};
 exports.containsStr = containsStr;
 
 function isAlphabet(str) {
@@ -49,24 +49,54 @@ function isDigitStr(str) {
 exports.isDigitStr = isDigitStr;
 
 //// count /////////////////////////////////////////////////////////////////////
-const countOccurrence = (str, regex)=>{
+const countOccurrence = (str, regex) => {
   return (str.match(regex) || []).length;
-}
+};
 exports.countOccurrence = countOccurrence;
 
 //// split /////////////////////////////////////////////////////////////////////
-const split = (str, seperator, targetLen) =>{
-  let strs = str.split(seperator);
-  return arrUtil.fixArrLen(strs, targetLen, '');
-}
+const split = (str, seperators, options = {}) => {
+  let { ignoreEmptyStr = false, targetStrLen = 0, trim = false } = options;
+  let strs;
+
+  // console.log(`str=${str}, seperators=`, seperators);
+  if (Array.isArray(seperators)) {
+    strs = [str];
+    // console.log(`seperators=`, seperators);
+    for (const seperator of seperators) {
+      let tmpStrs1 = [];
+      // console.log(`seperator=${seperator}, strs=`, strs);
+      for (const tmpStr1 of strs) {
+        let tmpStrs2 = tmpStr1.split(seperator);
+        // console.log(`tmpStrs2=`, tmpStrs2);
+        tmpStrs1.push(...tmpStrs2);
+      }
+
+      strs = tmpStrs1;
+    }
+  } else {
+    strs = str.split(seperator);
+  }
+  if(ignoreEmptyStr){
+    strs = strs.filter((str) => str !== '');
+  }
+  if(trim){
+    strs = strs.map((str) => str.trim());
+  }
+  if(targetStrLen > 0){
+    strs = arrUtil.fixArrLen(strs, targetStrLen, "");
+  }
+
+  return strs;
+};
 exports.split = split;
 
-const splitLine = (str) =>{
+const splitLine = (str) => {
   return str.split(/\r?\n/);
-}
+};
 exports.splitLine = splitLine;
 
-const cutStrBefore = (str, key, n = 1) =>{
+const cutStrBefore = (str, key, n = 1) => {
   // console.log('str', str);
   // const regex = new RegExp("(.*" + key + "){" + n + "}(.+)");
   // const rs = regex.exec(str);
@@ -77,127 +107,139 @@ const cutStrBefore = (str, key, n = 1) =>{
 
   // let rs = new RegExp("(.*c){" + i + "}(.+)").exec(str);
   // str = rs ? rs[i] : "";
-  if(str === null) return "";
+  if (str === null) return "";
   const regex = new RegExp(".*" + key);
-  while(n > 0 && str !== ""){
+  while (n > 0 && str !== "") {
     str = str.replace(regex, "");
     n--;
   }
   return str;
   // console.log(`str2`, str.replace(/.*\n/, ""));
-}
+};
 exports.cutStrBefore = cutStrBefore;
 
 //// concat ////////////////////////////////////////////////////////////////////
-const concat = (str1, str2, seperator = ', ') =>{
+const concat = (str1, str2, seperator = ", ") => {
   const isNonEmptyStr1 = isNonEmptyStr(str1, false);
   const isNonEmptyStr2 = isNonEmptyStr(str2, false);
-  if(!isNonEmptyStr1 && !isNonEmptyStr2) return "";
-  if(!isNonEmptyStr1) return str2;
-  if(!isNonEmptyStr2) return str1;
+  if (!isNonEmptyStr1 && !isNonEmptyStr2) return "";
+  if (!isNonEmptyStr1) return str2;
+  if (!isNonEmptyStr2) return str1;
   return str1 + seperator + str2;
-}
+};
 exports.concat = concat;
 
 //// format ////////////////////////////////////////////////////////////////////
-const ucwords = (data)=>{
+const ucwords = (data) => {
   data = data.toLowerCase();
-  return data.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
-  	function(s){
-  	  return s.toUpperCase();
-	});
+  return data.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function (s) {
+    return s.toUpperCase();
+  });
 };
 exports.ucwords = ucwords;
 
-const lcfirst = (data)=>{
-  if(!data || data.length < 1){
+const lcfirst = (data) => {
+  if (!data || data.length < 1) {
     return data;
   }
   return data.charAt(0).toLowerCase() + data.substr(1);
 };
 exports.lcfirst = lcfirst;
 
-const strCamel = (data)=>{
-  if(Array.isArray(data)){
+const strCamel = (data) => {
+  if (Array.isArray(data)) {
     let arr = [];
-    data.forEach(str=>{
+    data.forEach((str) => {
       arr.push(strCamel(str));
-    })
+    });
     return arr;
   }
 
   return lcfirst(strStudly(data));
-}
+};
 exports.strCamel = strCamel;
 
-const strStudly = (data)=>{
-  return ucwords(data.replace(/[-_]/g, ' ')).trim()
-    .replace(/ /g, '');
+const strStudly = (data) => {
+  return ucwords(data.replace(/[-_]/g, " ")).trim().replace(/ /g, "");
 };
 exports.strStudly = strStudly;
 
-const strSnake = (data)=>{
-  return data.replace(/[- ]+/g, '_')
-    .replace(/(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/g, '_')
+const strSnake = (data) => {
+  return data
+    .replace(/[- ]+/g, "_")
+    .replace(
+      /(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/g,
+      "_"
+    )
     .toLowerCase();
 };
 exports.strSnake = strSnake;
 
-const strConstant = (data)=>{
+const strConstant = (data) => {
   data = strSnake(data);
   return data.toUpperCase();
 };
 exports.strConstant = strConstant;
 
-const strDash = (data)=>{
-  data = data.replace(/[_ ]+/g, '-');
-  data = data.replace(/(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/g, '-');
+const strDash = (data) => {
+  data = data.replace(/[_ ]+/g, "-");
+  data = data.replace(
+    /(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/g,
+    "-"
+  );
   return data.toLowerCase();
 };
 exports.strDash = strDash;
 
-const strUnderscore = (data)=>{
-  return data.replace(/[ -]+/g, '_').replace(/[^a-zA-Z0-9_]/g, '').trim().toLowerCase();
-}
+const strUnderscore = (data) => {
+  return data
+    .replace(/[ -]+/g, "_")
+    .replace(/[^a-zA-Z0-9_]/g, "")
+    .trim()
+    .toLowerCase();
+};
 exports.strUnderscore = strUnderscore;
 
-const strToTitle = (data)=>{
-  data = strDash(data)
-  return ucwords(data.replace(/[-_]/g,' '));
+const strToTitle = (data) => {
+  data = strDash(data);
+  return ucwords(data.replace(/[-_]/g, " "));
 };
 exports.strToTitle = strToTitle;
 
 //// Special character ////////////////////////////////////////////////////////////////////
-const rmSpecialChars = (str, replacement = '')=>{
-  return str.replace(/[^a-zA-Z0-9_]/g, replacement)
-}
+const rmSpecialChars = (str, replacement = "") => {
+  return str.replace(/[^a-zA-Z0-9_]/g, replacement);
+};
 exports.rmSpecialChars = rmSpecialChars;
 
-const rmSpace = (str, replacement = '')=>{
-  return str.replace(/ /g, replacement)
-}
+const rmSpace = (str, replacement = "") => {
+  return str.replace(/ /g, replacement);
+};
 exports.rmSpace = rmSpace;
 
-const newLine = ()=>{
+const newLine = () => {
   return process.platform === "win32" ? "\r\n" : "\n";
-}
+};
 exports.newLine = newLine;
 
 //// Line operation ////////////////////////////////////////////////////////////////////
-const rmLineNDblSpace = (str)=>{
-  return str.replace(/[\t\r\n]/g, ' ').replace(/ +/g, ' ').trim();
+const rmLineNDblSpace = (str) => {
+  return str
+    .replace(/[\t\r\n]/g, " ")
+    .replace(/ +/g, " ")
+    .trim();
 };
 exports.rmLineNDblSpace = rmLineNDblSpace;
 
 //// show ////////////////////////////////////////////////////////////////////
-const showStrArr = (strs, title = "strArr", options = {})=>{
+const showStrArr = (strs, title = "strArr", options = {}) => {
   let { hasIdx = false, hasLen = true } = options;
   let sTmp = [];
   sTmp.push(`${title}` + (hasLen ? `(len=${strs.length})` : ""));
-  strs.forEach((str, idx)=>{
-    if(hasIdx){
+  strs.forEach((str, idx) => {
+    if (hasIdx) {
       sTmp.push(`${idx}: ${str}`);
-    }else{
+    } else {
       sTmp.push(str);
     }
   });
@@ -208,27 +250,26 @@ const showStrArr = (strs, title = "strArr", options = {})=>{
 exports.showStrArr = showStrArr;
 
 //// String information ////////////////////////////////////////////////////////////////////
-const showStr = (str, title = 'str')=>{
-  if(str === null){
+const showStr = (str, title = "str") => {
+  if (str === null) {
     console.log(`${title} is null`);
-
-  }else{
+  } else {
     let len = str.length;
     console.log(`${title}(${len})="${str}"`);
   }
 };
 exports.showStr = showStr;
 
-const strLen = (str)=>{
-  if(typeof(str) === 'string') return str.length;
+const strLen = (str) => {
+  if (typeof str === "string") return str.length;
   return 0;
 };
 exports.strLen = strLen;
 
 //// Regex /////////////////////////////////////////////////////////////////////
-const strWildcardStr2RegexStr = (str)=>{
-  str = str.replaceAll('.', "\\.");
-  str = str.replaceAll('*', '.*');
+const strWildcardStr2RegexStr = (str) => {
+  str = str.replaceAll(".", "\\.");
+  str = str.replaceAll("*", ".*");
   return `^${str}$`;
 };
 exports.strWildcardStr2RegexStr = strWildcardStr2RegexStr;
