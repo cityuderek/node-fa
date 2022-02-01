@@ -30,6 +30,11 @@ const getText = (doc, selector, defVal = "") => {
 };
 exports.getText = getText;
 
+const getLen = (doc, selector) => {
+  return doc.find(selector).length
+};
+exports.getLen = getLen;
+
 const getEleCnt = (doc, selector) => {
   let eles = doc.find(selector);
   // console.log(`eles=${eles.length}`);

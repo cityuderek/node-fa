@@ -10,7 +10,21 @@ const getArr2 = () => {
 const getArr0 = () => {
   return [ ];
 }
+/*
 
+
+  var arr = ['b', 'a', 1, 'a', 2, '1'];
+  var uniqueA =  nfa.arrUnique(arr);
+  var arrRemoveEle1 =  nfa.arrRemoveEle1(arr, 'a');
+  var arrRemoveEle =  nfa.arrRemoveEle(arr, 'a');
+
+  // console.log(`arr=` + arr);
+  // console.log(`arrRemoveEle1=` + arr);
+  console.log(`arr=` + arr);
+  console.log(`uniqueA=` + uniqueA);
+  console.log(`arrRemoveEle1=` + arrRemoveEle1);
+  console.log(`arrRemoveEle=` + arrRemoveEle);
+*/
 const test = () => {
   console.log('arrTest.test');
   console.log('nfa', nfa);

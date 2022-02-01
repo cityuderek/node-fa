@@ -35,6 +35,17 @@ const arrSkipFirstN = (arr, n) =>{
 }
 module.exports.arrSkipFirstN = arrSkipFirstN;
 
+//// new ///////////////////////////////////////////////////////////////////////
+const newArrA2z = (isLowerCase = true) =>{
+  var arr = [];
+  let baseAscii = isLowerCase ? 97 : 65;
+  for (let i = 0; i < 26; i++) {
+    arr.push(String.fromCharCode(i + baseAscii));
+  }
+  return arr;
+}
+module.exports.newArrA2z = newArrA2z;
+
 //// check /////////////////////////////////////////////////////////////////////
 const isEmptyArr = obj=>!isNonEmptyArr(obj);
 module.exports.isEmptyArr = isEmptyArr;
@@ -67,7 +78,25 @@ const kVArrToObj = (keys, vals)=>{
   })
   return obj;
 }
-module.exports.kVArrToObj = kVArrToObj
+module.exports.kVArrToObj = kVArrToObj;
+
+const arrInsertAt = (arr, val, index)=>{
+  arr.splice(index, 0, val);
+}
+module.exports.arrInsertAt = arrInsertAt;
+
+const arrFindRank = (arr, field, val, isAsc = true)=>{
+  let i = -1;
+  arr.some((el, index)=>{
+    if((isAsc && el[field] > val) || (!isAsc && el[field] < val)){
+      i = index;
+      return true;
+    }
+    return false;
+  });
+  return i;
+}
+module.exports.arrFindRank = arrFindRank;
 
 const newArr = (arraySize, val)=>{
   let arr = [];
@@ -82,6 +111,11 @@ const newArr = (arraySize, val)=>{
   return arr;
 }
 module.exports.newArr = newArr
+
+const arrClone = (arr)=>{
+  
+}
+module.exports.arrClone = arrClone
 
 //// filter //////////////////////////////////////////////////////////////////////
 const arrFilter = (arr, keys) => {
@@ -100,15 +134,40 @@ const arrFilterNot = (arr, keys) => {
 }
 module.exports.arrFilterNot = arrFilterNot;
 
-const arrRemoveIf = (arr, key) => {
-  return arr.filter(ele=>ele !== key)
+//// remove all occurence
+const arrRemoveEle = (arr, value) => {
+  return arr.filter(ele=>ele !== value)
 }
-exports.arrRemoveIf = arrRemoveIf;
+exports.arrRemoveEle = arrRemoveEle;
+
+//// remove first occurence only
+const arrRemoveEle1 = (arr, value, returnNullIfNotExist = false) => {
+  var index = arr.indexOf(value);
+  if (index !== -1) {
+    arr = JSON.parse(JSON.stringify(arr));  // clone array
+    arr.splice(index, 1);
+    return arr;
+  }
+  return returnNullIfNotExist ? null : arr;
+}
+exports.arrRemoveEle1 = arrRemoveEle1;
 
 const arrRemoveIfEmptyStr = (arr) => {
   return arr.filter(ele=>ele !== "")
 }
 exports.arrRemoveIfEmptyStr = arrRemoveIfEmptyStr;
+
+const arrUnique = (arr) => {
+  // console.log('arr', arr);
+  // if(isUniqueFunc === null){
+  //   isUniqueFunc = (arr, index) => {
+  //     return arr.indexOf(arr[index]) === index;
+  //   }
+  // }
+  // return arr.filter(isUniqueFunc);
+  return [...new Set(arr)]
+}
+exports.arrUnique = arrUnique;
 
 //// search //////////////////////////////////////////////////////////////////////
 const indexOfVal = (arr, key, value) => {
@@ -172,6 +231,24 @@ const arrMinEleVal = (items, cb)=>{
   return minValIdx !== null ? cb(items[minValIdx]) : null;
 }
 module.exports.arrMinEleVal = arrMinEleVal;
+
+//// sort //////////////////////////////////////////////////////////////////////
+const arrSort = (arr, key, isAsc = false) => {
+  if(isAsc){
+    arr.sort((obj1, obj2)=>{
+      if(obj1[key] == obj2[key]) return 0;
+      return obj1[key] > obj2[key] ? 1 : -1;
+    })
+  }else{
+    arr.sort((obj1, obj2)=>{
+      if(obj1[key] == obj2[key]) return 0;
+      return obj1[key] > obj2[key] ? -1 : 1;
+    })
+  }
+
+  return arr;
+}
+module.exports.arrSort = arrSort;
 
 //// show //////////////////////////////////////////////////////////////////////
 // const show = (arr, title = "")=>{

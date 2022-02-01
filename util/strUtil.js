@@ -54,6 +54,18 @@ const countOccurrence = (str, regex) => {
 };
 exports.countOccurrence = countOccurrence;
 
+//// compare /////////////////////////////////////////////////////////////////////
+const startsWithIgnoreCase = (haystack, needle) => {
+  if(!haystack || !needle) return false;
+  return haystack.toLowerCase().startsWith(needle.toLowerCase());
+};
+exports.startsWithIgnoreCase = startsWithIgnoreCase;
+const endsWithIgnoreCase = (haystack, needle) => {
+  if(!haystack || !needle) return false;
+  return haystack.toLowerCase().endsWith(needle.toLowerCase());
+};
+exports.endsWithIgnoreCase = endsWithIgnoreCase;
+
 //// split /////////////////////////////////////////////////////////////////////
 const split = (str, seperators, options = {}) => {
   let { ignoreEmptyStr = false, targetStrLen = 0, trim = false } = options;

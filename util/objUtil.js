@@ -146,7 +146,8 @@ const hasKey = (obj, ...keys) => {
 };
 module.exports.hasKey = hasKey;
 
-const clone = obj=>JSON.parse(JSON.stringify(obj));
+// const clone = obj=>JSON.parse(JSON.stringify(obj));
+const clone = _.cloneDeep;
 module.exports.clone = clone;
 
 const objValEquals = (obj, expectedVal, ...keys) => {
