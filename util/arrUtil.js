@@ -280,3 +280,12 @@ const showArr = (arr, title = undefined, options = {}) => {
   }
 };
 module.exports.showArr = showArr
+
+//// other /////////////////////////////////////////////////////////////////////
+const arrRandVal = (arr) =>{
+  if(!arr) return null;
+  let idx = Math.floor(Math.random() * arr.length);
+  
+  return arr[idx];
+}
+module.exports.arrRandVal = arrRandVal;

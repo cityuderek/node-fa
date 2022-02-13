@@ -104,11 +104,11 @@ const writeFileSync = (path, ctt)=>{
 };
 exports.writeFileSync = writeFileSync;
 
-const writeJsonSync = (path, json)=>{
-  ctt = JSON.stringify(json);
+const writeJsonFileSync = (path, json, space = 0)=>{
+  ctt = space > 0 ? JSON.stringify(json, null, space) : JSON.stringify(json);
   fs.writeFileSync(path, ctt);
 };
-exports.writeJsonSync = writeJsonSync;
+exports.writeJsonFileSync = writeJsonFileSync;
 
 //// file info ////////////////////////////////////////////////////////////////
 const fileExistsSync = (path)=>{

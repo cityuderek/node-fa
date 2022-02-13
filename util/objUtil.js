@@ -242,9 +242,11 @@ const getDetailType = (obj) =>{
 module.exports.getDetailType = getDetailType
 
 const length = (obj) =>{
-  if(typeof obj === 'string') return obj.length;
+  let ty = typeof obj;
+  if(ty === 'string') return obj.length;
   if(Array.isArray(obj)) return obj.length;
-
+  if(ty === 'object') return Object.keys(obj).length;
+  
   return 0;
 }
 module.exports.length = length
