@@ -103,6 +103,11 @@ const split = (str, seperators, options = {}) => {
 };
 exports.split = split;
 
+const substr = (str, startIndex, len) => {
+  return str.substring(startIndex, startIndex + len);
+};
+exports.substr = substr;
+
 const splitLine = (str) => {
   return str.split(/\r?\n/);
 };

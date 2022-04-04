@@ -5,6 +5,7 @@ module.exports = {
   ...require('./dtUtil'),
   ...require('./fileUtil'),
   ...require('./jsonUtil'),
+  ...require('./pathUtil'),
   ...require('./mathUtil'),
   ...require('./networkUtil'),
   ...require('./nodeUtil'),
